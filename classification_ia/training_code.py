@@ -27,7 +27,7 @@ y_train = np.array(y_train)
 y_train = y_train.reshape(-1, 1) # Reshape y_train
 
 
-num_classes = 4 # Define the number of classes.
+num_classes = 2 # Define the number of classes.
 y_train = to_categorical(y_train, num_classes) # Convert y_train to categorical.
 
 

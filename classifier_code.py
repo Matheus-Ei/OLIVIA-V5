@@ -8,6 +8,7 @@ from tensorflow.keras.models import load_model
 # Freatures imports
 import classification_ia.tokens as tk
 import database.operations as database_op
+import code_executor as cde
 
 # Main function to back-end
 def main():
@@ -57,13 +58,15 @@ def main():
 
 
                 if cp == 0:
+                    print("0")
                     
                 elif cp == 1:
-                elif cp == 2:
+                    response = cde.time()
 
+                else:
+                    response = " "
 
-
-            database_op.log_insert(text_audio, response)
+                database_op.log_insert(text_audio, response)
        
             # To unknown values
             except sr.UnknownValueError:
