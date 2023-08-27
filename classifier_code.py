@@ -1,7 +1,13 @@
 # Imports
 import speech_recognition as sr
 import threading
+import numpy as np
+from tensorflow.keras.models import load_model
 
+
+# Freatures imports
+import classification_ia.tokens as tk
+import database.operations as database_op
 
 # Main function to back-end
 def main():
@@ -24,8 +30,40 @@ def main():
                 print("recognizing...\n")
                 print(text_audio + "\n")
 
-                #Add the conversation to logs
-                db.logs(text_audio, text_response)
+
+                # Using the classification IA
+                loaded_model = load_model(r'classification_ia\model.h5') # load model.
+
+                array_ta = [text_audio] # Convert to list
+                tokenized_start_word = tk.tokenizing(array_ta) # Tokenize the input
+
+                # Convert to numpy array
+                tokenized_start_word = np.array(tokenized_start_word) 
+                tokenized_start_word = np.array([np.array(tokens) for tokens in tokenized_start_word])
+
+                # Make the prediction.
+                predictions = loaded_model.predict(tokenized_start_word) 
+                class_predictions = np.argmax(predictions, axis=1) # Get the class with the highest probability
+
+                # Print the prediction.
+                print("--===<Prediction Prob>===--")
+                print(predictions)
+                print("--===:::===--\n")
+
+                print("--===<Class Predicted>===--")
+                print(class_predictions)
+                print("--===:::===--")
+                cp = class_predictions
+
+
+                if cp == 0:
+                elif cp == 1:
+                elif cp == 2:
+
+
+
+            database_op.log_insert(text_audio, response)
+       
             # To unknown values
             except sr.UnknownValueError:
                 print("...")

@@ -1,11 +1,8 @@
 # Imports
 
 
+# Freatures Imports
+import freatures.sounds.voice as voice
 
 
 
-
-
-# To test the code execution before use in assistent
-if __name__ == "__main__":
-    check_shedule("conferir meus compromissos")
