@@ -3,7 +3,7 @@ from tensorflow.keras.models import load_model
 import tokens as tk
 import numpy as np
 
-# load model.
+# load model.que
 loaded_model = load_model(r'classification_ia\model.h5')
 
 # Start the loop.
