@@ -54,5 +54,6 @@ def log_insert(question, response):
         print(e)
 
 
+# Funcion to Test the Connectons
 if __name__ == "__main__":
     log_insert("test", "test")

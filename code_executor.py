@@ -5,6 +5,7 @@ from datetime import datetime
 import freatures.sounds.voice as voice
 
 
+# Funcion to get the time
 def time():
     time=datetime.now() 
     hour = int(time.strftime("%H"))

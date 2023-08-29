@@ -58,6 +58,7 @@ def fast_speak(texto):
     play(audio)
 
 
+# Funcion to Listening the Voice from the User
 def listening():
     # Creating the Speach Recognition and defines the openai key
     r = sr.Recognizer()
@@ -80,6 +81,7 @@ def listening():
                 print("...")
 
 
+# To Test the Funcions
 if __name__ == "__main__":
     speak("Esse é um teste de voz para saber como está ficando")
     fast_speak("Esse é um teste de voz para saber como está ficando")
