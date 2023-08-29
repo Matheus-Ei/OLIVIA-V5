@@ -2,13 +2,19 @@
 import pyodbc
 import random
 from datetime import datetime, timedelta
+import mysql.connector
 
+# Connection Configs
+db_config = {
+    "host": "108.167.151.99",
+    "user": "finflo09_matheus_db",
+    "password": "123@Matheuse",
+    "database": "finflo09_prometeu"
+}
 
 # Creating the connection with the database
-conn_str = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=database\db\mainDb.accdb;'
-conn = pyodbc.connect(conn_str)
+conn = mysql.connector.connect(**db_config)
 cursor = conn.cursor()
-
 
 # Funcion to insert logs with database
 def log_insert(question, response):
@@ -38,7 +44,7 @@ def log_insert(question, response):
     try:
         date = str(year+"/"+mounth+"/"+day+":"+week+"/"+hour+":"+minutes+":"+seconds) # Defines the date
 
-        cursor.execute("INSERT INTO logs(usuario, jarvis, data) VALUES ('"+question+"','"+response+"','"+date+"');") # Execute the operation
+        cursor.execute("INSERT INTO logs(usuario, prometeu, data) VALUES ('"+question+"','"+response+"','"+date+"');") # Execute the operation
 
         conn.commit() # Save the alterations in the logs tabble
 
@@ -46,3 +52,7 @@ def log_insert(question, response):
     except pyodbc.Error as e:
         print("The connection with the database to insert logs had one error: -->")
         print(e)
+
+
+if __name__ == "__main__":
+    log_insert("test", "test")

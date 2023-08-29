@@ -10,6 +10,7 @@ import classification_ia.tokens as tk
 import database.operations as database_op
 import code_executor as cde
 
+
 # Main function to back-end
 def main():
     r = sr.Recognizer() # Creating the Speech Recognition and defines the openai key
