@@ -59,10 +59,10 @@ def main():
 
 
                 if cp == 0:
-                    print("0")
+                    response = cde.time()
                     
                 elif cp == 1:
-                    response = cde.time()
+                    print("0")
 
                 else:
                     response = " "
