@@ -5,8 +5,8 @@ import numpy as np
 from tensorflow.keras.models import load_model
 
 
-# Freatures imports
-import classification_ia.tokens as tk
+# Modules imports
+import ia.classification.tokens as tkn
 import database.operations as database_op
 import code_executor as cde
 
@@ -22,6 +22,13 @@ def main():
         r.adjust_for_ambient_noise(source, duration=2)
         print("->given fit<-")
 
+        # Starting the classification IA
+        print("->starting classifier<-")
+        # Using the classification IA
+        loaded_model = load_model(r'ia\classification\model.h5') # load model.
+        print("->classifier started<-")
+
+
         print("initialization...\n")
         while True:
             print("listening...\n")
@@ -32,12 +39,9 @@ def main():
                 print("recognizing...\n")
                 print(text_audio + "\n")
 
-
-                # Using the classification IA
-                loaded_model = load_model(r'classification_ia\model.h5') # load model.
-
+                # Tokenize the input
                 array_ta = [text_audio] # Convert to list
-                tokenized_start_word = tk.tokenizing(array_ta) # Tokenize the input
+                tokenized_start_word = tkn.tokenizing(array_ta) # Tokenize the input
 
                 # Convert to numpy array
                 tokenized_start_word = np.array(tokenized_start_word) 
@@ -62,7 +66,10 @@ def main():
                     response = cde.time()
                     
                 elif cp == 1:
-                    print("0")
+                    print("1")
+
+                elif cp == 2:
+                    response = cde.chat_mode()
 
                 else:
                     response = " "

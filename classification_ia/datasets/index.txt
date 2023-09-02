@@ -1,2 +1,0 @@
-class 0 --> Questions about "What Time is It"
-class 1 --> Basic Search Questions
