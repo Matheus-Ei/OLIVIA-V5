@@ -35,7 +35,7 @@ def main():
                 
                 # Funcion to Search something in the internet
                 elif dbOp.question("search", text_audio):
-                    print("1")
+                    response = ex.search(text_audio)
 
                 # Funcion to Activate
                 elif dbOp.question("activate", text_audio):

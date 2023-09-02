@@ -5,9 +5,11 @@ from datetime import datetime
 import modules.sounds.voice as voice
 import modules.translator as translator
 import database.operations as dbOp
+import modules.search as searchf
 
 # IA imports
 import ia.chat.bot as bot
+import ia.sumarization.sumarizer as sumarizer
 
 
 # Funcion to get the time
@@ -19,6 +21,21 @@ def time():
 
     voice.speak(response) # Speak the response
     return response # Return the response
+
+
+# Funcion to Search something in the internet
+def search(text):
+    text = translator.translation(text, "pt", "en") # Translate to English
+    search_result = searchf.google(text, 1) # Execute the search
+
+    sum_search_result = sumarizer.sumarize(str(search_result)) # Sumarize the search result
+
+    print(sum_search_result)
+
+    sum_search_result = translator.translation(sum_search_result, "en", "pt") # Translate to Portuguese
+
+    voice.speak(sum_search_result) # Speak the response
+    return(sum_search_result) # Return the result
 
 
 # Chatbot Mode Loop
