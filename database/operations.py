@@ -16,6 +16,7 @@ db_config = {
 conn = mysql.connector.connect(**db_config)
 cursor = conn.cursor()
 
+
 # Funcion to insert logs with database
 def log_insert(question, response):
     # Gets the data and the time
@@ -43,9 +44,7 @@ def log_insert(question, response):
     # Try execute and commit the operation
     try:
         date = str(year+"/"+mounth+"/"+day+":"+week+"/"+hour+":"+minutes+":"+seconds) # Defines the date
-
         cursor.execute("INSERT INTO logs(usuario, prometeu, data) VALUES ('"+question+"','"+response+"','"+date+"');") # Execute the operation
-
         conn.commit() # Save the alterations in the logs tabble
 
     # If haves a exeption the code prints what exeption have
@@ -54,6 +53,18 @@ def log_insert(question, response):
         print(e)
 
 
-# Funcion to Test the Connectons
-if __name__ == "__main__":
-    log_insert("test", "test")
+# Funcion to Check if the question is in the Database
+def question(funcion, text):
+    try:
+        # Execute a consult
+        cursor.execute('SELECT question FROM classification WHERE funcion = '+"'"+funcion+"';")
+        # Recover the consult data
+        rows = cursor.fetchall()
+        for row in rows:
+            roww = str(row[0])
+            if roww in text:
+                return True
+    except pyodbc.Error as e:
+        print(e)
+
+

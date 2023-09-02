@@ -4,6 +4,7 @@ from datetime import datetime
 # Modules Imports
 import modules.sounds.voice as voice
 import modules.translator as translator
+import database.operations as dbOp
 
 # IA imports
 import ia.chat.bot as bot
@@ -23,13 +24,15 @@ def time():
 # Chatbot Mode Loop
 def chat_mode():
     history = [] # Creates Hitory list
-
     # Funcion to Chat with the bot in Loop
     while True:
         input_prompt = voice.listening() # Listen the user
 
-        if "desativar" in input_prompt:
-            return history # Return the history
+        if dbOp.question("deactivate", input_prompt):
+            if dbOp.question("mode", input_prompt): # Funcion to Activate a mode
+                if dbOp.question("chat", input_prompt): # Funcion to Activate the chat mode
+                    return "chat" # Return the history
+                
         else:
             tra_input_prompt = translator.translation(str(input_prompt), "pt", "en") # Translate to English
 
