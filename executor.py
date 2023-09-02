@@ -25,13 +25,11 @@ def time():
 
 # Funcion to Search something in the internet
 def search(text):
+    dbOp.question_answer("search", text) # Remove the question from the text
+
     text = translator.translation(text, "pt", "en") # Translate to English
-    search_result = searchf.google(text, 1) # Execute the search
-
+    search_result = searchf.google(text) # Execute the search
     sum_search_result = sumarizer.sumarize(str(search_result)) # Sumarize the search result
-
-    print(sum_search_result)
-
     sum_search_result = translator.translation(sum_search_result, "en", "pt") # Translate to Portuguese
 
     voice.speak(sum_search_result) # Speak the response

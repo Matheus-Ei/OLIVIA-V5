@@ -61,3 +61,17 @@ def question(funcion, text):
         print(e)
 
 
+# Funcion to consult the questions to assistent and check if they are in database
+def question_answer(funcion, text):
+    try:
+        # Execute a consult
+        cursor.execute('SELECT question FROM classification WHERE funcion = '+"'"+funcion+"';")
+        # Recover the consult data
+        rows = cursor.fetchall()
+        for row in rows:
+            roww = str(row[0])
+            if roww in text:
+                text = text.replace(roww, "")
+                return text
+    except pyodbc.Error as e:
+        print(e)

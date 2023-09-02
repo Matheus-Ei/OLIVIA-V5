@@ -15,9 +15,9 @@ def main():
     # Loop to capture and recognize the sound of the microfone
     with sr.Microphone() as source:
         # Gave fit in the audio to ajust with ambient
-        print("->starting audio adjustment<-")
+        print("-->starting audio adjustment<--")
         r.adjust_for_ambient_noise(source, duration=1)
-        print("->given fit<-")
+        print("-->given fit<--")
 
         print("initialization...\n")
         while True:

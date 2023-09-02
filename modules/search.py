@@ -5,10 +5,10 @@ from bs4 import BeautifulSoup
 
 
 # Funcion to search in the google
-def google(query, results_num=1):
+def google(query):
     # to seartch in the google
     print("--> Starting the google search funcion <--")
-    for url_text in search(query, num_results=results_num):
+    for url_text in search(query, num_results=1, timeout=1):
         response = requests.get(url=url_text)
 
         print("--> Getting the text from the url: " + url_text + " <--")
@@ -21,6 +21,6 @@ def google(query, results_num=1):
         text = " "
         for p in paragraphs:
             text = text + " " + p
-    
-    print("--> Ending the google search funcion <--")
-    return(text) # Return the text
+        
+        print("--> Ending the google search funcion <--")
+        return(text) # Return the text
