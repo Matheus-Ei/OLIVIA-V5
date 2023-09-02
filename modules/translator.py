@@ -7,7 +7,3 @@ def translation(text, from_lan, to_lan):
     translation = translator.translate(text) # Translate the text
 
     return(translation) # Return the translated text
-
-
-if __name__ == "__main__":
-    print(translation("olá, como voce esta?", "pt", "en"))

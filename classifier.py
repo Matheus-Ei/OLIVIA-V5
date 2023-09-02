@@ -58,7 +58,3 @@ if __name__ == "__main__":
         # Starts a thread to the back-end code
         main_thread = threading.Thread(target=main)
         main_thread.start()
-
-    # If the password or the loggin is incorrect the code executes the else
-    else:
-        exit()

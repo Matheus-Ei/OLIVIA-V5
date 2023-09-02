@@ -10,13 +10,12 @@ import speech_recognition as sr
 # Function for normal speech, longer, but with better quality
 def speak(data):
     # Voices
-    voice = 'en-US-SteffanNeural'
-    voice2 = 'pt-BR-AntonioNeural'
-    voice3 = 'pt-BR-FranciscaNeural'
+    voice = 'pt-BR-AntonioNeural'
+    voice2 = 'pt-BR-FranciscaNeural'
 
     # Command Definition
     data = data.replace('\n'," ")
-    command = f'edge-tts --rate="+50%" --voice "{voice2}" --text "{data}" --write-media "modules\sounds\data.mp3"'
+    command = f'edge-tts --rate="+20%" --voice "{voice2}" --text "{data}" --write-media "modules\sounds\data.mp3"'
 
     os.system(command) # Sends the command to CMD
 
