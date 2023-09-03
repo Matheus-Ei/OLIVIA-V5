@@ -6,6 +6,11 @@ from pydub.playback import play
 import pyttsx3
 import speech_recognition as sr
 
+# Inits the engines
+pygame.init() # Init the pygame to reproduces the voice
+engine = pyttsx3.init() # Starts the text-speack
+r = sr.Recognizer() # Creating the Speach Recognition and defines the openai key
+
 
 # Function for normal speech, longer, but with better quality
 def speak(data):
@@ -18,9 +23,7 @@ def speak(data):
     command = f'edge-tts --rate="+20%" --voice "{voice2}" --text "{data}" --write-media "modules\sounds\data.mp3"'
 
     os.system(command) # Sends the command to CMD
-
-    # Init the pygame to reproduces the voice
-    pygame.init()
+    
     pygame.mixer.init()
     pygame.mixer.music.load("modules\sounds\data.mp3") # Loads the sound to pygame
 
@@ -46,9 +49,8 @@ def speak(data):
 def fast_speak(texto):
     print("-> "+texto+" <-")
     
-    engine = pyttsx3.init() # Starts the text-speack
     engine.save_to_file(texto, "modules\sounds\data.mp3")
-    engine.setProperty("rate", 1000) # Speed Change
+    engine.setProperty("rate", 300) # Speed Change
     engine.runAndWait() # run the voice
 
     audio = AudioSegment.from_wav("modules\sounds\data.mp3")
@@ -59,9 +61,6 @@ def fast_speak(texto):
 
 # Funcion to Listening the Voice from the User
 def listening():
-    # Creating the Speach Recognition and defines the openai key
-    r = sr.Recognizer()
-
     with sr.Microphone() as source:
         print("->starting audio adjustment<-")
         r.adjust_for_ambient_noise(source, duration=0.2) # Time to ajust the microfone recognition with the sound of the ambient
@@ -82,5 +81,6 @@ def listening():
 
 # To Test the Funcions
 if __name__ == "__main__":
-    speak("Esse é um teste de voz para saber como está ficando")
     fast_speak("Esse é um teste de voz para saber como está ficando")
+    fast_speak("Esse é um teste de voz para saber como está ficando isso")
+    fast_speak("como está ficando isso?")
