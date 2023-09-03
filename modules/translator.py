@@ -1,5 +1,7 @@
 # Imports
 from translate import Translator
+from googletrans import Translator
+
 
 # Funcion to translate the text
 def translation(text, from_lan, to_lan):
@@ -13,3 +15,16 @@ def translation(text, from_lan, to_lan):
 
     print("--> Ending the translate funcion <--")
     return(translation) # Return the translated text
+
+
+# Google translator
+def translation_google(text, lang):
+    print("--> Starting the translate funcion <--")
+    translater = Translator() # Create the translator object
+    
+    translation = translater.translate(text, dest=lang) # Translate the text
+
+    print("--> Ending the translate funcion <--")
+    return(translation.text) # Return the translated text
+
+

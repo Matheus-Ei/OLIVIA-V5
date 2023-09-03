@@ -49,12 +49,12 @@ def chat_mode():
                     return "chat" # Return the history
                 
         else:
-            tra_input_prompt = translator.translation(str(input_prompt), "pt", "en") # Translate to English
+            tra_input_prompt = translator.translation_google(str(input_prompt), "en") # Translate to English
 
             response, history = bot.chatbot(tra_input_prompt, history=history) # Get the response from the bot
 
             trans_response = response[-1] # Converts the response to get the lasts tuple
             trans_response = trans_response[-1] # Converts the last response on the tuple to string
-            trans_response = translator.translation(str(trans_response), "en", "pt") # Translate to Portuguese
+            trans_response = translator.translation_google(str(trans_response), "pt") # Translate to Portuguese
 
             voice.speak(str(trans_response))
