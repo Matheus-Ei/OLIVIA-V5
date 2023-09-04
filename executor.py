@@ -11,10 +11,8 @@ import modules.search as searchf
 
 # IA imports
 print("-->Importing Executor IA<--")
-#import ia.chat.bot as bot
-import ia.sumarization.sumarizer_network as sumarizer
-#import ia.text_gen.gen as text_gen
-import ia.text_gen.chat as chat_gen
+import ia.sumarizer as sumarizer
+import ia.chat as chat_gen
 
 
 # Funcion to get the time
@@ -30,23 +28,8 @@ def time():
 
 # Funcion to Search something in the internet
 def search(text):
-    # Funcion to search in the google
-    if "google" in text:
-        text = dbOp.question_answer("search", text) # Remove the question from the text
-        voice.speak("Pesquisando no Google por: " + text) # Speak the search
-
-        tran_text = translator.translation(text, "en") # Translate to English
-        search_result = searchf.google(tran_text) # Execute the search
-
-        resp = sumarizer.sumarize(str(search_result))
-
-        sum_search_result = translator.translation(resp, "pt") # Translate to Portuguese
-
-        voice.speak("O resultado da pesquisa: " + text + " Foi: " + sum_search_result) # Speak the response
-        return(sum_search_result) # Return the result
-    
     # Funcion to search in the wikipedia
-    elif "wikipédia" in text:
+    if "wikipédia" in text:
         text = dbOp.question_answer("search", text) # Remove the question from the text
         voice.speak("Pesquisando na Wikipedia por: " + text) # Speak the search
 
@@ -59,12 +42,20 @@ def search(text):
         voice.speak("O resultado da pesquisa: " + text + " Foi: " + sum_search_result) # Speak the response
         return(sum_search_result) # Return the result
     
-    # Funcion if the user dont say the place to search
+    # Funcion if the user dont say the place to search to search in the google
     else:
-        voice.speak("Voce não disse a plataforma de pesquisa")
+        text = dbOp.question_answer("search", text) # Remove the question from the text
+        voice.speak("Pesquisando no Google por: " + text) # Speak the search
 
-        text = voice.listening() # Listen the user
-        search(text)
+        tran_text = translator.translation(text, "en") # Translate to English
+        search_result = searchf.google(tran_text) # Execute the search
+
+        resp = sumarizer.sumarize(str(search_result))
+
+        sum_search_result = translator.translation(resp, "pt") # Translate to Portuguese
+
+        voice.speak("O resultado da pesquisa: " + text + " Foi: " + sum_search_result) # Speak the response
+        return(sum_search_result) # Return the result
 
 
 # Chatbot Mode Loop
@@ -115,4 +106,4 @@ def chat_mode():
             print(tra_input_prompt)
             history, response = chat_gen.predict(input=tra_input_prompt, history=history)
             trans_response = translator.translation(str(response), "pt") # Translate to Portuguese
-            voice.fast_speak(str(trans_response))
+            voice.speak(str(trans_response))

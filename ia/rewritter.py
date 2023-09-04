@@ -4,15 +4,17 @@ import random
 
 
 # Define the API URL and the autorization token
-API_URL = "https://api-inference.huggingface.co/models/bigscience/bloom"
+API_URL = "https://api-inference.huggingface.co/models/Phind/Phind-CodeLlama-34B-v2"
 headers = {"Authorization": "Bearer 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"}
 
 
 # Define the system prompt
 system = (
-    "\nSistem: just below there is an inbox, "
-    "in it everything that enters is summarized"
-    "the summary maintains the meaning of the initial sentence, but with a much smaller size \n"
+    "\nSistem: the prompt is programmed to rewrite all user input with other words, but keeping the meaning of sentences"
+    "user: rewrite 'now its 10:10 am'\n"
+    "prompt: 'its 10:10 of morning now'\n"
+    "user: rewrite 'hi, how are u?'\n"
+    "prompt: 'hey are you fine?'\n"
 )
 
 # Funcion to get the prompt
@@ -22,11 +24,11 @@ def get_prompt(input_user):
     global i
     if i == 0:
         i = i + 1
-        prompt = system + "Input: " + input_user + "\n" + "Output:"
+        prompt = system + "user: " + input_user + "\n" + "prompt:"
         return prompt
     
     else:
-        prompt = "\nInput: " + input_user + "\n" + "Output:"
+        prompt = "\nuser: " + input_user + "\n" + "prompt:"
         return prompt
 
 
@@ -53,8 +55,8 @@ def delete_trash(response, history):
     response = [item['generated_text'] for item in response]
     responser = str(response)
 
-    responser = responser.split("Input:", -1)[-1]
-    responser = responser.split("Output:", 1)[0]
+    responser = responser.split("user:", -1)[-1]
+    responser = responser.split("prompt:", 1)[0]
 
     responser = responser.replace("']", "")
     responser = responser.replace('"]', "")
@@ -71,10 +73,10 @@ def predict(input, history):
 
     # Dict with the parameters
     generate_kwargs = dict(
-        temperature=0.3,
+        temperature=1,
         max_new_tokens=100,
         seed=random_seed,
-        top_k = 500,
+        top_k = 50,
     )
 
     # Prompt input

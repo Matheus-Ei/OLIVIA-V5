@@ -2,7 +2,7 @@
 from googlesearch import search
 import requests
 from bs4 import BeautifulSoup
-import ia.sumarization.sumarizer_network as sumarizer
+import ia.sumarizer as sumarizer
 import wikipediaapi
 
 
@@ -23,20 +23,16 @@ def google(query):
         text = " "
         i=0
         for p in paragraphs:
-            if i > 6:
+            if i > 10:
                 print("--> i>10 <--")
                 print("--> Ending the google search funcion <--")
                 return(text) # Return the text
             
-            elif i > 2:
-                text = str(p)
-                p = sumarizer.sumarize(p)
+            elif i > 1:
+                p = sumarizer.sumarize(str(p))
                 text = str(text) + " " + str(p)
-
             i=i+1
 
-        print(text)
-        
         print("--> Ending the google search funcion <--")
         return(text) # Return the text
     
@@ -62,3 +58,6 @@ def wikipedia(query):
         return("A página não foi encontrada.")
 
     print("--> Ending the wikipedia search funcion <--")
+
+
+
