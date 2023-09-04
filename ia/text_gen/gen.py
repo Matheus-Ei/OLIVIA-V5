@@ -11,8 +11,12 @@ headers = {"Authorization": "Bearer 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"}
 # Define the system prompt
 system = (
     "\nSistem: just below there is an inbox, "
-    "in it everything that enters is summarized"
-    "the summary maintains the meaning of the initial sentence, but with a much smaller size \n"
+    "in it everything that enters is rewritten with other words"
+    "the rewrite keeps the meaning of the initial sentence. \n"
+    "Input: It's now 10:20 in the morning \n"
+    "Output: the current time is 10:20 \n"
+    "Input: the weather forecast for today is 30 degrees \n"
+    "Output: today will be 30 degrees \n"
 )
 
 # Funcion to get the prompt
@@ -71,10 +75,10 @@ def predict(input, history):
 
     # Dict with the parameters
     generate_kwargs = dict(
-        temperature=0.3,
+        temperature=2.0,
         max_new_tokens=100,
         seed=random_seed,
-        top_k = 500,
+        top_k = 50,
     )
 
     # Prompt input

@@ -51,7 +51,7 @@ def main():
        
             # To unknown values
             except sr.UnknownValueError:
-                print("...")
+                print("#####==->Unknown Value Error<-==#####")
 
 
 # Interface to put the password and the loggin

@@ -77,9 +77,9 @@ def predict(input, history):
     # Dict with the parameters
     generate_kwargs = dict(
         temperature=0.3,
-        max_new_tokens=100,
+        max_new_tokens=50,
         seed=random_seed,
-        top_k = 500,
+        top_k = 1000,
     )
 
     # Prompt input

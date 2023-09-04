@@ -2,6 +2,8 @@
 from googlesearch import search
 import requests
 from bs4 import BeautifulSoup
+import ia.sumarization.sumarizer_network as sumarizer
+import wikipediaapi
 
 
 # Funcion to search in the google
@@ -19,8 +21,44 @@ def google(query):
 
         # Join the paragraphs
         text = " "
+        i=0
         for p in paragraphs:
-            text = text + " " + p
+            if i > 10:
+                print("--> i>10 <--")
+                print("--> Ending the google search funcion <--")
+                return(text) # Return the text
+            
+            elif i > 1:
+                text = str(p)
+                p = sumarizer.sumarize(p)
+                text = str(text) + " " + str(p)
+
+            i=i+1
+
+        print(text)
         
         print("--> Ending the google search funcion <--")
         return(text) # Return the text
+    
+
+
+# Funcion to search in the wikipedia
+def wikipedia(query):
+    # to seartch in the wikipedia
+    print("--> Starting the wikipedia search funcion <--")
+
+    # Creates a wikipedia object
+    wiki_wiki = wikipediaapi.Wikipedia('pt')
+    page_py = wiki_wiki.page(query)
+
+    # Verify if the page exists
+    if page_py.exists():
+        print("--> Título da Pagina: %s <--" % page_py.title) # Print the title of the page
+        a=page_py.text # Gets the text of the page
+        return(a) 
+
+    else:
+        print("A página não foi encontrada.")
+        return("A página não foi encontrada.")
+
+    print("--> Ending the wikipedia search funcion <--")
