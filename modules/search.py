@@ -23,12 +23,12 @@ def google(query):
         text = " "
         i=0
         for p in paragraphs:
-            if i > 10:
+            if i > 6:
                 print("--> i>10 <--")
                 print("--> Ending the google search funcion <--")
                 return(text) # Return the text
             
-            elif i > 1:
+            elif i > 2:
                 text = str(p)
                 p = sumarizer.sumarize(p)
                 text = str(text) + " " + str(p)
