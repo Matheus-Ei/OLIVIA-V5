@@ -59,6 +59,7 @@ def delete_trash(response, history):
 
     responser = responser.split("Assistant:", -1)[-1]
     responser = responser.split("User", 1)[0]
+    responser = responser.split("#", 1)[0]
 
     responser = responser.replace("']", "")
     responser = responser.replace('"]', "")

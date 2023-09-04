@@ -12,7 +12,7 @@ import modules.search as searchf
 # IA imports
 print("-->Importing Executor IA<--")
 #import ia.chat.bot as bot
-#import ia.sumarization.sumarizer as sumarizer
+import ia.text_gen.sumarization as sumarizer
 #import ia.text_gen.gen as text_gen
 import ia.text_gen.chat as chat_gen
 
@@ -30,12 +30,15 @@ def time():
 
 # Funcion to Search something in the internet
 def search(text):
+    history = ""
     dbOp.question_answer("search", text) # Remove the question from the text
 
     text = translator.translation(text, "en") # Translate to English
     search_result = searchf.google(text) # Execute the search
-    sum_search_result = sumarizer.sumarize(str(search_result)) # Sumarize the search result
-    sum_search_result = translator.translation(sum_search_result, "pt") # Translate to Portuguese
+
+    history, resp = sumarizer.predict(input=str(search_result), history=history)
+
+    sum_search_result = translator.translation(resp, "pt") # Translate to Portuguese
 
     voice.speak(sum_search_result) # Speak the response
     return(sum_search_result) # Return the result

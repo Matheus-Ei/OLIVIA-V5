@@ -18,8 +18,11 @@ def speak(data):
     voice = 'pt-BR-AntonioNeural'
     voice2 = 'pt-BR-FranciscaNeural'
 
-    # Command Definition
     data = data.replace('\n'," ")
+    data = data.replace('.',",")
+    data = data.replace('-'," ")
+
+    # Command Definition
     command = f'edge-tts --rate="+20%" --voice "{voice2}" --text "{data}" --write-media "modules\sounds\data.mp3"'
 
     os.system(command) # Sends the command to CMD
