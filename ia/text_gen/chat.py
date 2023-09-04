@@ -4,7 +4,8 @@ import random
 
 
 # Define the API URL and the autorization token
-API_URL = "https://api-inference.huggingface.co/models/timdettmers/guanaco-33b-merged"
+#API_URL = "https://api-inference.huggingface.co/models/timdettmers/guanaco-33b-merged"
+API_URL = "https://api-inference.huggingface.co/models/Phind/Phind-CodeLlama-34B-v2"
 headers = {"Authorization": "Bearer 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"}
 
 
