@@ -1,8 +1,7 @@
 # Imports
 import pyodbc
-import random
-from datetime import datetime, timedelta
-import mysql.connector
+from datetime import datetime
+
 
 # Connection Configs
 conn_str = r'DRIVER={Microsoft Access Driver (*.mdb, *.accdb)};DBQ=database\data.accdb;'
@@ -37,7 +36,7 @@ def log_insert(question, response):
     # Try execute and commit the operation
     try:
         date = str(year+"/"+mounth+"/"+day+":"+week+"/"+hour+":"+minutes+":"+seconds) # Defines the date
-        cursor.execute("INSERT INTO logs(user, response, date) VALUES ('"+question+"','"+response+"','"+date+"');") # Execute the operation
+        cursor.execute("INSERT INTO logs (user, response, data) VALUES ('"+question+"', '"+response+"', '"+date+"');") # Execute the operation
         conn.commit() # Save the alterations in the logs tabble
 
     # If haves a exeption the code prints what exeption have

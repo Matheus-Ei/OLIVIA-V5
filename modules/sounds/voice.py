@@ -63,7 +63,7 @@ def fast_speak(texto):
 def listening():
     with sr.Microphone() as source:
         print("->starting audio adjustment<-")
-        r.adjust_for_ambient_noise(source, duration=0.2) # Time to ajust the microfone recognition with the sound of the ambient
+        r.adjust_for_ambient_noise(source, duration=1) # Time to ajust the microfone recognition with the sound of the ambient
         print("->given fit<-")
         print("initialization...\n")
         while True:

@@ -1,8 +1,10 @@
 # Imports
+print("-->Importing Libraries<--")
 import speech_recognition as sr
 import threading
 
 # Modules imports
+print("-->Importing Modules<--")
 import database.operations as dbOp
 import executor as ex
 
