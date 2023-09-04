@@ -76,6 +76,7 @@ def chat_mode():
                 
         else:
             tra_input_prompt = translator.translation(str(input_prompt), "en") # Translate to English
+            print(tra_input_prompt)
             history, response = chat_gen.predict(input=tra_input_prompt, history=history)
             trans_response = translator.translation(str(response), "pt") # Translate to Portuguese
             voice.speak(str(trans_response))

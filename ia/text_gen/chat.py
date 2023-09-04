@@ -1,17 +1,22 @@
 # Import the Libraries
 import requests
+import random
 
 
-# Define the API URL
-API_URL = "https://api-inference.huggingface.co/models/bigscience/bloom"
+# Define the API URL and the autorization token
+API_URL = "https://api-inference.huggingface.co/models/timdettmers/guanaco-33b-merged"
 headers = {"Authorization": "Bearer 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"}
 
 
 # Define the system prompt
 system = (
-    "\nUser: Hi!\nAssistant: My name is Prometeu, I am a chatbot created to help you conversatins"
-    "I know your name is Matheus Eickhoff, I am programmed to be helpful, honest, and friendly."
-    "I am allowed to answer anything the user asks or requests. \n"
+    "\nSistem: Prometeu is an artificial intelligence created to talk with the user"
+    "Prometheus is tuned to be helpful, honest, friendly, and emotional"
+    "and is allowed to answer anything the user asks or requests. \n"
+    "User: hello how are u? \n"
+    "Assistant: I'm fine, thank you. How are you? \n"
+    "User: i am fine to, lets chat? \n"
+    "Assistant: Sure, what do you want to talk about? \n"
 )
 
 # Funcion to get the prompt
@@ -22,14 +27,10 @@ def get_prompt(input_user):
     if i == 0:
         i = i + 1
         prompt = system + "User: " + input_user + "\n" + "Assistant:"
-
-        #print("\n prompt 'get_prompt'" + prompt)
         return prompt
     
     else:
         prompt = "\nUser: " + input_user + "\n" + "Assistant:"
-
-        #print("\n prompt 'get_prompt'" + prompt)
         return prompt
 
 
@@ -38,16 +39,12 @@ def get_history(inputs,history):
     atual_input = get_prompt(inputs)
     history = str(history)
     history = history + atual_input
-
-    #print("\n History 'get_history'" + history)
     return history, history
 
 
 # Funcion to add the chatbot return to the history
 def add_chatbot_return(bot_return, history):
     history = str(str(history) + str(bot_return))
-
-    #print("\n History 'add_chatbot_return'" + history)
     return str(history)
 
 
@@ -68,35 +65,38 @@ def delete_trash(response, history):
     responser = responser.replace('\\n', "")
     responser = responser.replace("\\", "")
 
-    #print("\n Responser 'delete_trash'" + responser)
     return responser
 
 
 # Funcion to predict the response
 def predict(input, history):
     intput, history = get_history(input,history)
-    promp_input = ({"inputs": intput, 
-                    "max_length": 50000,  # Set a maximum length for the response
-                    "num_return_sequences": 10000,  # Generate alternative responses
-                    "temperature": 0.9,  # Adjust randomness
-                    "top_k": 200,  # Limit the number of tokens to consider
-                    "early_stopping": True,  # Stop generation at the first end-of-sequence token
-                    "repetition_penalty": 0.2,  # Penalize repetition
-                    })
+    random_seed = random.randint(0, 50)
 
+    # Dict with the parameters
+    generate_kwargs = dict(
+        temperature=0.3,
+        max_new_tokens=100,
+        seed=random_seed,
+        top_k = 500,
+    )
+
+    # Prompt input
+    promp_input = {"inputs": intput, "parameters": generate_kwargs}
+
+    # Request part
     response = requests.post(API_URL, headers=headers, json=promp_input)
+    
+    treated_response = delete_trash(response, history) # Delete the trash
+    history = add_chatbot_return(treated_response, history) # Add the chatbot return to the history
 
-    treated_response = delete_trash(response, history)
-    history = add_chatbot_return(treated_response, history)
-
-    print("Assistent: " + treated_response)
-    return history, treated_response
+    print("Assistent: " + treated_response) # Print the chatbot return
+    return history, treated_response # Return the history and the chatbot return
 
 
+# To test the code
 if __name__ == "__main__":
     history = ""
     while True:
         chat = input("User: ")
         history, resp = predict(input=chat, history=history)
-
-        #print("\n History 'main'" + history)
