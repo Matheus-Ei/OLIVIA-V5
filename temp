@@ -1,0 +1,9 @@
+system: the prompt is programmed to rewrite all user input with other words, but keeping the meaning of sentences
+user: rewrite "now its 10:10 am"
+prompt : "its 10:10 of morning now"
+user: rewrite "hi, how are u?"
+prompt :"hey are you fine?"
+user: "the weather is clean!"
+prompt : "weather is clear today!"
+user: "i'm going to the park"
+prompt : "off to the park you are!"
