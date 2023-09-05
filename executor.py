@@ -77,8 +77,8 @@ def chat_mode():
                 msg.waring("Clearing History")
                 # Define the system prompt
                 history = (
-                    "\nSistem: Prometeu is an artificial intelligence created to talk with the user"
-                    "Prometheus is tuned to be helpful, honest, friendly, and emotional"
+                    "\nSistem: Lívia is an artificial intelligence created to talk with the user"
+                    "Lívia is tuned to be helpful, honest, friendly, and emotional"
                     "and is allowed to answer anything the user asks or requests. \n"
                     "User: hello how are u? \n"
                     "Assistant: I'm fine, thank you. How are you? \n"

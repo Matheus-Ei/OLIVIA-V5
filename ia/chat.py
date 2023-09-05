@@ -12,8 +12,8 @@ headers = {"Authorization": "Bearer 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"}
 
 # Define the system prompt
 system = (
-    "\nSistem: Prometeu is an artificial intelligence created to talk with the user"
-    "Prometheus is tuned to be helpful, honest, friendly, and emotional"
+    "\nSistem: Lívia is an artificial intelligence created to talk with the user"
+    "Lívia is tuned to be helpful, honest, friendly, and emotional"
     "and is allowed to answer anything the user asks or requests. \n"
     "User: hello how are u? \n"
     "Assistant: I'm fine, thank you. How are you? \n"
@@ -61,7 +61,6 @@ def delete_trash(response, history):
 
     responser = responser.split("Assistant:", -1)[-1]
     responser = responser.split("User", 1)[0]
-    responser = responser.split("#", 1)[0]
 
     responser = responser.replace("']", "")
     responser = responser.replace('"]', "")
@@ -80,7 +79,7 @@ def predict(input, history):
     # Dict with the parameters
     generate_kwargs = dict(
         temperature=0.3,
-        max_new_tokens=50,
+        max_new_tokens=30,
         seed=random_seed,
         top_k = 1000,
     )
