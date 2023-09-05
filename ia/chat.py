@@ -1,6 +1,7 @@
 # Import the Libraries
 import requests
 import random
+import system.messages as msg
 
 
 # Define the API URL and the autorization token
@@ -72,6 +73,7 @@ def delete_trash(response, history):
 
 # Funcion to predict the response
 def predict(input, history):
+    msg.informative("Starting the Chatbot Funcion")
     intput, history = get_history(input,history)
     random_seed = random.randint(0, 50)
 
@@ -92,7 +94,7 @@ def predict(input, history):
     treated_response = delete_trash(response, history) # Delete the trash
     history = add_chatbot_return(treated_response, history) # Add the chatbot return to the history
 
-    print("Assistent: " + treated_response) # Print the chatbot return
+    msg.informative("Ending the Chatbot Funcion")
     return history, treated_response # Return the history and the chatbot return
 
 

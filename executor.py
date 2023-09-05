@@ -1,16 +1,19 @@
 # Imports
-print("-->Importing Executor Libraries<--")
+import colorama
+print(colorama.Fore.GREEN + "--> Importing Executor Libraries <--" + colorama.Fore.RESET)
 from datetime import datetime
 
+
 # Modules Imports
-print("-->Importing Executor Modules<--")
+print(colorama.Fore.GREEN + "--> Importing Executor Modules <--" + colorama.Fore.RESET)
 import modules.sounds.voice as voice
 import modules.translator as translator
 import database.operations as dbOp
 import modules.search as searchf
+import system.messages as msg
 
 # IA imports
-print("-->Importing Executor IA<--")
+msg.informative("Importing Executor IA")
 import ia.sumarizer as sumarizer
 import ia.chat as chat_gen
 
@@ -71,7 +74,7 @@ def chat_mode():
         if dbOp.question("clear", input_prompt):
             if dbOp.question("historic", input_prompt):     
                 voice.speak("Limpando histórico")
-                print("-->Clearing history<--")
+                msg.waring("Clearing History")
                 # Define the system prompt
                 history = (
                     "\nSistem: Prometeu is an artificial intelligence created to talk with the user"
@@ -88,22 +91,20 @@ def chat_mode():
             if dbOp.question("historic", input_prompt):
                 voice.speak("Mostrando histórico")
 
-                print("-->Showing history<--")
-                print(history)
-                print("-->@@@@@@@@@@@@@@@<--")
+                msg.waring("Showing History")
+                msg.informative(history)
 
         # Funcion to Deactivate
         elif dbOp.question("deactivate", input_prompt):
             if dbOp.question("mode", input_prompt): # Funcion to Activate a mode
                 if dbOp.question("chat", input_prompt): # Funcion to Activate the chat mode
                     voice.speak("Desativando modo de chat")
-                    print("-->Deactivating chat mode<--")
-                    return "chat" # Return the history
+                    msg.waring("Deactivating Chat Mode<--")
+                    return history # Return the history
                 
                 
         else:
             tra_input_prompt = translator.translation(str(input_prompt), "en") # Translate to English
-            print(tra_input_prompt)
             history, response = chat_gen.predict(input=tra_input_prompt, history=history)
             trans_response = translator.translation(str(response), "pt") # Translate to Portuguese
             voice.speak(str(trans_response))

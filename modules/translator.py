@@ -1,15 +1,16 @@
 # Imports
 from googletrans import Translator
+import system.messages as msg
 
 
 # Google translator
 def translation(text, lang):
-    print("--> Starting the translate funcion <--")
+    msg.informative("Starting the Translate Funcion")
     translater = Translator() # Create the translator object
     
     translation = translater.translate(text, dest=lang) # Translate the text
 
-    print("--> Ending the translate funcion <--")
+    msg.informative("Ending the Translate Funcion")
     return(translation.text) # Return the translated text
 
 

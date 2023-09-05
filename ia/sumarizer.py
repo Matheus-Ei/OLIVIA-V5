@@ -1,5 +1,6 @@
 # Import the Libraries
 import requests
+import system.messages as msg
 
 # Load the model and tokenizer
 API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
@@ -8,7 +9,7 @@ headers = {"Authorization": "Bearer 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"}
 
 # Funcion to sumarize the text
 def sumarize(text):
-    print("--> Starting the sumarize funcion <--")
+    msg.informative("Starting the sumarize funcion")
     text = text.replace("\n", "") # Remove the \n
     text = text.replace("\t", "") # Remove the \t
     text = text.replace("\r", "") # Remove the \r
@@ -39,7 +40,7 @@ def sumarize(text):
 
         response = requests.post(API_URL, headers=headers, json=promp_input)
 
-        print("--> Ending the sumarize funcion <--")
+        msg.informative("Ending the Sumarize Funcion")
 
         ret = response.json()
         ret = ret[0]
@@ -47,4 +48,4 @@ def sumarize(text):
 
         return str(ret)  # Return the response
     except:
-        print("#####==->Sumarizer Error<-==#####")
+        msg.error("Sumarizer Error")

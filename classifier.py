@@ -1,12 +1,14 @@
 # Imports
-print("-->Importing Libraries<--")
+import colorama
+print(colorama.Fore.GREEN + "--> Importing Libraries <--" + colorama.Fore.RESET)
 import speech_recognition as sr
 import threading
 
 # Modules imports
-print("-->Importing Modules<--")
+print(colorama.Fore.GREEN + "--> Importing Modules <--" + colorama.Fore.RESET)
 import database.operations as dbOp
 import executor as ex
+import system.messages as msg
 
 
 # Main function to back-end
@@ -17,21 +19,21 @@ def main():
     # Loop to capture and recognize the sound of the microfone
     with sr.Microphone() as source:
         # Gave fit in the audio to ajust with ambient
-        print("-->starting audio adjustment<--")
+        msg.waring("Starting Audio Adjustment")
         r.adjust_for_ambient_noise(source, duration=1)
-        print("-->given fit<--")
+        msg.informative("Given Fit")
 
-        print("initialization...\n")
+        msg.continuation("Initialization")
         while True:
-            print("listening...\n")
+            msg.continuation("Listening")
             try:
                 basic_audio = r.listen(source)
                 text_audio=(r.recognize_google(basic_audio, language="pt-br"))
                 text_audio = text_audio.lower() 
-                print("recognizing...\n")
-                print(text_audio + "\n")
+                msg.continuation("Recognizing")
+                msg.user(text_audio)
 
-                # Funcion to get the time
+                # Funcion to get the times
                 if dbOp.question("time", text_audio):
                     response = ex.time()
                 
@@ -47,11 +49,12 @@ def main():
 
 
                 # Incert a log
+                msg.waring("Inserting a Log")
                 dbOp.log_insert(text_audio, response)
        
             # To unknown values
             except sr.UnknownValueError:
-                print("#####==->Unknown Value Error<-==#####")
+                msg.error("Unknown Value Error")
 
 
 # Interface to put the password and the loggin

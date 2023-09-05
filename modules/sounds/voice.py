@@ -5,6 +5,7 @@ from pydub import AudioSegment
 from pydub.playback import play
 import pyttsx3
 import speech_recognition as sr
+import system.messages as msg
 
 # Inits the engines
 pygame.init() # Init the pygame to reproduces the voice
@@ -19,8 +20,7 @@ def fast_speak(texto):
     texto = texto.replace('.',",")
     texto = texto.replace('-'," ")
 
-
-    print(")==> "+texto+" <==(")
+    msg.assistent(texto)
     
     engine.save_to_file(texto, "modules\sounds\data.mp3")
     engine.setProperty("rate", 250) # Speed Change
@@ -54,14 +54,13 @@ def speak(data):
         # Try speak the voice
         try:
             pygame.mixer.music.play() 
-            print(")==> "+data+" <==(")
+            msg.assistent(data)
             while pygame.mixer.music.get_busy():
                 pygame.time.Clock().tick(10)
 
         # If the code had exeption
         except Exception as e:
-            print("The speak code had error, please check the code to correct this exeption: -->")
-            print(e)
+            msg.error("The Speak Code Had a Error: " + str(e))
 
         # Turn off the pygame
         finally:
@@ -76,21 +75,18 @@ def speak(data):
 # Funcion to Listening the Voice from the User
 def listening():
     with sr.Microphone() as source:
-        print("->starting audio adjustment<-")
         r.adjust_for_ambient_noise(source, duration=1) # Time to ajust the microfone recognition with the sound of the ambient
-        print("->given fit<-")
-        print("initialization...\n")
         while True:
-            print("listening...\n")
+            msg.continuation("Listening")
             try:
                 basicAudio = r.listen(source)
                 textAudio=(r.recognize_google(basicAudio, language="pt-br"))
                 textAudio = textAudio.lower() 
-                print(textAudio)
+                msg.user(textAudio)
                 return textAudio
 
             except sr.UnknownValueError:
-                print("...")
+                msg.error("Unknown Value Error")
 
 
 # To Test the Funcions
