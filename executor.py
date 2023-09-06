@@ -11,6 +11,7 @@ import modules.translator as translator
 import database.operations as dbOp
 import modules.search as searchf
 import system.messages as msg
+import ia.questions as questions
 
 # IA imports
 msg.informative("Importing Executor IA")
@@ -47,10 +48,10 @@ def search(text):
     
     # Funcion if the user dont say the place to search to search in the google
     else:
-        text = dbOp.question_answer("search", text) # Remove the question from the text
-        voice.speak("Pesquisando no Google por: " + text) # Speak the search
-
         tran_text = translator.translation(text, "en") # Translate to English
+        tran_text = questions.response("What do I want to search on the internet?", tran_text)
+        voice.speak("Pesquisando no Google por: " + tran_text) # Speak the search
+
         search_result = searchf.google(tran_text) # Execute the search
 
         resp = sumarizer.sumarize(str(search_result))

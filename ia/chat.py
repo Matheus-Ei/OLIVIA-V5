@@ -2,7 +2,7 @@
 import requests
 import random
 import re
-#import system.messages as msg
+import system.messages as msg
 
 
 # Define the API URL and the autorization token
@@ -10,7 +10,7 @@ import re
 API_URL = "https://api-inference.huggingface.co/models/Phind/Phind-CodeLlama-34B-v2"
 headers = {"Authorization": "Bearer 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"}
 
-intentions = "GENERATE_IMAGE, SPEAK_TIME"
+intentions = "GENERATE_IMAGE, SPEAK_TIME, SEARCH_ON_GOOGLE"
 
 # Define the system prompt
 system = (
@@ -62,12 +62,11 @@ def delete_trash(response, history):
     response = response.json()
     history = str(history)
 
-    # Selecionar o conteúdo dentro de 'generated_text'
+    # Select the content inside the generated_text
     response = [item['generated_text'] for item in response][0]
-    responser = str(response)
-    
-    #responser = responser.split("Assistant:", -1)[-1]
-    #responser = responser.split("User", 1)[0]
+    responser = str(response) # Convert to string
+
+    # Split the responses between the user and the chatbot
     exitt = []
     responser = responser.split("User:")
     for resp in responser:
@@ -75,7 +74,7 @@ def delete_trash(response, history):
         for it in respt:
             exitt.append(it)
 
-
+    # Split the history between the user and the chatbot
     exitt_hist = []
     resp_history = history.split("User:")
     for resp_h in resp_history:
@@ -83,22 +82,23 @@ def delete_trash(response, history):
         for it_h in respt_h:
             exitt_hist.append(it_h)
 
-
+    # Converting to set
     exitt_hist = set(exitt_hist)
     exitt = set(exitt)
 
-    intersect = exitt.intersection(exitt_hist)
-    # Deleta os itens da interseção de array1
+    intersect = exitt.intersection(exitt_hist) # Get the intersection
+
+    # Delete the intersection
     for inter in intersect:
         exitt.remove(inter)
 
-    responser = list(exitt)[0]
-    #print(list(exitt))
+    responser = list(exitt)[0] # Get the chatbot return
 
+    # Delete the trash
     responser = responser.replace("']", "")
     responser = responser.replace('"]', "")
 
-    return responser
+    return responser # Return the chatbot return
 
 
 # Funcion to get the intention if have one
@@ -109,23 +109,23 @@ def get_intent(response):
         intent = response.split("{intent=")[1]
         intent = intent.replace("}", "")
 
-    
+        msg.informative("Intent: " + intent)
         return responser, intent
     
     else:
-        return response, "none"
+        return response, "None"
 
 
 # Funcion to predict the response
 def predict(input, history):
-    #msg.informative("Starting the Chatbot Funcion")
+    msg.informative("Chatbot Funcion")
     intput, history = get_history(input,history)
     random_seed = random.randint(0, 50)
 
     # Dict with the parameters
     generate_kwargs = dict(
         temperature=0.3,
-        max_new_tokens=200,
+        max_new_tokens=50,
         seed=random_seed,
         top_k = 10000,
     )
@@ -139,9 +139,8 @@ def predict(input, history):
     treated_response = delete_trash(response, history) # Delete the trash
     history = add_chatbot_return(treated_response, history) # Add the chatbot return to the history
 
-    treated_response, intent = get_intent(treated_response)
+    treated_response, intent = get_intent(treated_response) # Get the intention if have one
 
-    #msg.informative("Ending the Chatbot Funcion")
     return history, treated_response, intent # Return the history and the chatbot return
 
 
@@ -153,4 +152,3 @@ if __name__ == "__main__":
         history, resp, intent = predict(input=chat, history=history)
         print("Assistent: " + resp)
         print("Intent: " + intent + "\n")
-        #print("\n"+history)

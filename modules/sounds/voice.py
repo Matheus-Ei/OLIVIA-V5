@@ -23,7 +23,7 @@ def fast_speak(texto):
     msg.assistent(texto)
     
     engine.save_to_file(texto, "modules\sounds\data.mp3")
-    engine.setProperty("rate", 250) # Speed Change
+    engine.setProperty("rate", 230) # Speed Change
     engine.runAndWait() # run the voice
 
     audio = AudioSegment.from_wav("modules\sounds\data.mp3")
@@ -45,7 +45,7 @@ def speak(data):
 
     # Command Definition
     try:
-        command = f'edge-tts --rate="+20%" --voice "{voice2}" --text "{data}" --write-media "modules\sounds\data.mp3"'
+        command = f'edge-tts --rate="+40%" --voice "{voice2}" --text "{data}" --write-media "modules\sounds\data.mp3"'
         os.system(command) # Sends the command to CMD
     
         pygame.mixer.init()

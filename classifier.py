@@ -11,6 +11,7 @@ import executor as ex
 import system.messages as msg
 import ia.chat as chat
 import modules.sounds.voice as voice
+import modules.translator as translator
 
 
 # Main function to back-end
@@ -36,9 +37,22 @@ def main():
                 msg.user(text_audio)
 
 
+                # Chatbot part
                 history = ""
-                history, response, intent = chat.predict(text_audio, history)
-                voice.speak(response)
+                tra_input_prompt = translator.translation(str(text_audio), "en") # Translate to English
+                history, response, intent = chat.predict(tra_input_prompt, history) # Predict the response
+                trans_response = translator.translation(str(response), "pt") # Translate to Portuguese
+                voice.speak(trans_response) # Speak the response
+
+
+                #Funcion to Speak Time
+                if "SPEAK_TIME" in intent:
+                    ex.time()
+                    
+
+                # Funcion to Search
+                elif "SEARCH_ON_GOOGLE" in intent:
+                    ex.search(text_audio)
 
 
                 # Incert a log

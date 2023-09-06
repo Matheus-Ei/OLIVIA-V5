@@ -10,7 +10,7 @@ import system.messages as msg
 # Funcion to search in the google
 def google(query):
     # to seartch in the google
-    msg.waring("Starting the Google Search Funcion")
+    msg.waring("Google Search Funcion")
     for url_text in search(query, num_results=1, timeout=1):
         response = requests.get(url=url_text)
 
@@ -34,7 +34,6 @@ def google(query):
                 text = str(text) + " " + str(p)
             i=i+1
 
-        msg.waring("Ending the Google Search Funcion")
         return(text) # Return the text
     
 
@@ -42,7 +41,7 @@ def google(query):
 # Funcion to search in the wikipedia
 def wikipedia(query):
     # to seartch in the wikipedia
-    msg.waring("Starting the wikipedia search funcion")
+    msg.waring("Wikipedia search funcion")
 
     # Creates a wikipedia object
     wiki_wiki = wikipediaapi.Wikipedia('pt')
