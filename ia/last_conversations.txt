@@ -1,0 +1,6 @@
+User: can you generate another image for me?
+Assistant: Of course, here is it: command:{GENERATE_IMAGE}
+User: thanks for the help.
+Assistant: No problem, whenever you need it, just call
+hii
+Hello! How can I assist you today?

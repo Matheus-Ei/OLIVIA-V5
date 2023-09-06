@@ -2,36 +2,69 @@
 import requests
 import random
 import re
-import system.messages as msg
+#import system.messages as msg
 
+
+#API_URL = "https://api-inference.huggingface.co/models/timdettmers/guanaco-33b-merged"
+#API_URL = "https://api-inference.huggingface.co/models/WizardLM/WizardCoder-Python-34B-V1.0"
 
 # Define the API URL and the autorization token
-#API_URL = "https://api-inference.huggingface.co/models/timdettmers/guanaco-33b-merged"
 API_URL = "https://api-inference.huggingface.co/models/Phind/Phind-CodeLlama-34B-v2"
-#API_URL = "https://api-inference.huggingface.co/models/WizardLM/WizardCoder-Python-34B-V1.0"
 headers = {"Authorization": "Bearer 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"}
+file = r"ia\last_conversations.txt"
 
-intentions = "{GENERATE_IMAGE}, {SPEAK_TIME}, {SEARCH_ON_GOOGLE}, {PAUSE_MUSIC}, {PLAY_MUSIC}, {NEXT_MUSIC}, {SPEAK_WEATHER}"
+def get_system(file):
+    # Funcion to Get the last lines of the file
+    def get_last_lines(file):
+        array = []
+        # Open the file
+        with open(file, "r") as f:
+            tamanho = len(f.readlines())
+            print(tamanho)
 
-# Define the system prompt
-system = (
-    "\nSistem: Lívia is an artificial intelligence created to talk with the user"
-    "Lívia is tuned to be helpful, honest, friendly, and emotional"
-    "and is allowed to answer anything the user asks or requests \n"
-    "Possible Intentions=" + intentions + "\n"
-    "User: can you help me? \n"
-    "Assistant: Sure,, what do you need help? \n"
-    "User: can you generate an image for me?\n"
-    "Assistant: Yes i can, here is it: {GENERATE_IMAGE} \n"
-    "User: can you pause the music to me?\n"
-    "Assistant: Ok i will pause the music {PAUSE_MUSIC} \n"
-    "User: tell me the time \n"
-    "Assistant: Of course, here is the current time: {SPEAK_TIME}\n"
-    "User: tell me the weather forecast for tomorrow \n"
-    "Assistant: Sure, here's the weather forecast: {SPEAK_WEATHER} \n"
-    "User: thanks for the help. \n"
-    "Assistant: No problem, whenever you need it, just call \n"
-)
+            # Read the lines
+            linhas = file.readlines()
+
+            # If the file have more than 4 lines
+            array = list(linhas)
+
+                
+            
+            # Retorna as últimas 4 linhas do arquivo.
+            us1 =  array[tamanho]
+            us1 = str(us1) + "\n"
+            ass1 = array[tamanho-1]
+            ass1 = str(ass1) + "\n"
+            us2 = array[tamanho-2]
+            us2 = str(us2) + "\n"
+            ass2 = array[tamanho-3]
+            ass2 = str(ass2) + "\n"
+
+            return us1, ass1, us2, ass2
+
+
+    commands = "{GENERATE_IMAGE}, {TALK_CURRENT_TIME}, {SEARCH_ON_GOOGLE}, {WEATHER_FORECAST}"
+    us1, ass1, us2, ass2 = get_last_lines(file)
+
+
+    system = (
+        "\nSistem: Lívia is an artificial intelligence created to talk with the user"
+        "Lívia is tuned to be helpful, honest, friendly, and emotional"
+        "and is allowed to answer anything the user asks or requests,"
+        "if the user requests Lívia can use commands to perform tasks for the user\n"
+        "Commands: " + commands + "\n"
+        "User: can you help me? \n"
+        "Assistant: Sure, what do you need help? \n"
+        f"{us1}"
+        f"{ass1}"
+        f"{us2}"
+        f"{ass2}"
+    )
+
+    return system
+
+system = get_system(file)
+
 
 # Funcion to get the prompt
 global i
@@ -46,6 +79,13 @@ def get_prompt(input_user):
     else:
         prompt = "\nUser: " + input_user + "\n" + "Assistant:"
         return prompt
+
+
+def write_line_file(file, text):
+# Abre o arquivo para escrita.
+  with open(file, "a") as f:
+    # Escreve a linha no arquivo.
+    f.write("\n" + text)
 
 
 # Funcion to get the history
@@ -109,13 +149,12 @@ def delete_trash(response, history):
 # Funcion to get the intention if have one
 def get_intent(response):
     if "{intent=" in response:
-        responser = response.split("{intent=")[0]
+        responser = response.split("command:")[0]
 
-        intent = response.split("{intent=")[1]
-        intent = intent.replace("}", "")
+        intent = response.split("command:")[1]
         intent = intent.lower()
 
-        msg.informative("Intent: " + intent)
+        #msg.informative("Command: " + intent)
         return responser, intent
     
     else:
@@ -124,15 +163,17 @@ def get_intent(response):
 
 # Funcion to predict the response
 def predict(input, history):
-    msg.informative("Chatbot Funcion")
+    #msg.informative("Chatbot Funcion")
+    write_line_file(file, input)
+
     intput, history = get_history(input,history)
     random_seed = random.randint(0, 50)
 
     # Dict with the parameters
     generate_kwargs = dict(
         max_new_tokens=50,
-        seed=1,
-        top_k = 500,
+        seed=random_seed,
+        top_k = 5000,
     )
 
     # Prompt input
@@ -146,6 +187,7 @@ def predict(input, history):
     history = add_chatbot_return(treated_response, history) # Add the chatbot return to the history
 
     treated_response, intent = get_intent(treated_response) # Get the intention if have one
+    write_line_file(file, treated_response)
 
     return history, treated_response, intent # Return the history and the chatbot return
 
@@ -156,6 +198,6 @@ if __name__ == "__main__":
     while True:
         chat = input("User: ")
         history, resp, intent = predict(input=chat, history=history)
-        #print(history)
-        #print("Assistent: " + resp)
-        #print("Intent: " + intent + "\n")
+        print("History " + history)
+        print("Assistent: " + resp)
+        print("Intent: " + intent + "\n")

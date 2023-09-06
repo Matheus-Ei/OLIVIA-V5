@@ -12,7 +12,7 @@ import system.messages as msg
 import modules.sounds.voice as voice
 import modules.translator as translator
 
-
+# Import IAs
 import ia.chat as chat
 
 
@@ -48,7 +48,7 @@ def main():
 
 
                 #Funcion to Speak Time
-                if "speak_time" in intent:
+                if "talk_current_time" in intent:
                     ex.time()
 
 
