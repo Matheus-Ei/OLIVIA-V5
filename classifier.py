@@ -9,6 +9,8 @@ print(colorama.Fore.GREEN + "--> Importing Modules <--" + colorama.Fore.RESET)
 import database.operations as dbOp
 import executor as ex
 import system.messages as msg
+import ia.chat as chat
+import modules.sounds.voice as voice
 
 
 # Main function to back-end
@@ -33,19 +35,10 @@ def main():
                 msg.continuation("Recognizing")
                 msg.user(text_audio)
 
-                # Funcion to get the times
-                if dbOp.question("time", text_audio):
-                    response = ex.time()
-                
-                # Funcion to Search something in the internet
-                elif dbOp.question("search", text_audio):
-                    response = ex.search(text_audio)
 
-                # Funcion to Activate
-                elif dbOp.question("activate", text_audio):
-                    if dbOp.question("mode", text_audio): # Funcion to Activate a mode
-                        if dbOp.question("chat", text_audio): # Funcion to Activate the chat mode
-                            response = ex.chat_mode()
+                history = ""
+                history, response, intent = chat.predict(text_audio, history)
+                voice.speak(response)
 
 
                 # Incert a log
