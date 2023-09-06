@@ -9,9 +9,11 @@ print(colorama.Fore.GREEN + "--> Importing Modules <--" + colorama.Fore.RESET)
 import database.operations as dbOp
 import executor as ex
 import system.messages as msg
-import ia.chat as chat
 import modules.sounds.voice as voice
 import modules.translator as translator
+
+
+import ia.chat as chat
 
 
 # Main function to back-end
@@ -46,18 +48,18 @@ def main():
 
 
                 #Funcion to Speak Time
-                if "SPEAK_TIME" in intent:
+                if "speak_time" in intent:
                     ex.time()
-                    
+
 
                 # Funcion to Search
-                elif "SEARCH_ON_GOOGLE" in intent:
+                elif "search_on_google" in intent:
                     ex.search(text_audio)
 
 
                 # Incert a log
                 msg.waring("Inserting a Log")
-                dbOp.log_insert(text_audio, response)
+                #dbOp.log_insert(text_audio, response)
        
             # To unknown values
             except sr.UnknownValueError:

@@ -11,12 +11,12 @@ import modules.translator as translator
 import database.operations as dbOp
 import modules.search as searchf
 import system.messages as msg
-import ia.questions as questions
 
 # IA imports
 msg.informative("Importing Executor IA")
 import ia.sumarizer as sumarizer
 import ia.chat as chat_gen
+import ia.questions as questions
 
 
 # Funcion to get the time

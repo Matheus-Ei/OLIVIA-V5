@@ -8,24 +8,29 @@ import system.messages as msg
 # Define the API URL and the autorization token
 #API_URL = "https://api-inference.huggingface.co/models/timdettmers/guanaco-33b-merged"
 API_URL = "https://api-inference.huggingface.co/models/Phind/Phind-CodeLlama-34B-v2"
+#API_URL = "https://api-inference.huggingface.co/models/WizardLM/WizardCoder-Python-34B-V1.0"
 headers = {"Authorization": "Bearer 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"}
 
-intentions = "GENERATE_IMAGE, SPEAK_TIME, SEARCH_ON_GOOGLE"
+intentions = "{GENERATE_IMAGE}, {SPEAK_TIME}, {SEARCH_ON_GOOGLE}, {PAUSE_MUSIC}, {PLAY_MUSIC}, {NEXT_MUSIC}, {SPEAK_WEATHER}"
 
 # Define the system prompt
 system = (
     "\nSistem: Lívia is an artificial intelligence created to talk with the user"
     "Lívia is tuned to be helpful, honest, friendly, and emotional"
-    "and is allowed to answer anything the user asks or requests. \n"
-    "Possible Intentions: " + intentions + "\n"
-    "User: hello how are u? \n"
-    "Assistant: I'm fine, thank you. How are you? \n"
-    "User: i am fine to, can you help me? \n"
-    "Assistant: Sure, what do you need help? \n"
-    "User: can you generate an image for me? \n"
-    "Assistant: Yes i can, here is it: {intent=GENERATE_IMAGE} \n"
-    "User: what time is it? \n"
-    "Assistant: Now it is: {intent=TELL_HOUR} \n"
+    "and is allowed to answer anything the user asks or requests \n"
+    "Possible Intentions=" + intentions + "\n"
+    "User: can you help me? \n"
+    "Assistant: Sure,, what do you need help? \n"
+    "User: can you generate an image for me?\n"
+    "Assistant: Yes i can, here is it: {GENERATE_IMAGE} \n"
+    "User: can you pause the music to me?\n"
+    "Assistant: Ok i will pause the music {PAUSE_MUSIC} \n"
+    "User: tell me the time \n"
+    "Assistant: Of course, here is the current time: {SPEAK_TIME}\n"
+    "User: tell me the weather forecast for tomorrow \n"
+    "Assistant: Sure, here's the weather forecast: {SPEAK_WEATHER} \n"
+    "User: thanks for the help. \n"
+    "Assistant: No problem, whenever you need it, just call \n"
 )
 
 # Funcion to get the prompt
@@ -82,21 +87,21 @@ def delete_trash(response, history):
         for it_h in respt_h:
             exitt_hist.append(it_h)
 
-    # Converting to set
-    exitt_hist = set(exitt_hist)
-    exitt = set(exitt)
-
-    intersect = exitt.intersection(exitt_hist) # Get the intersection
 
     # Delete the intersection
-    for inter in intersect:
-        exitt.remove(inter)
+    for itm in exitt_hist:
+        if itm in exitt:
+            exitt.remove(itm)
 
     responser = list(exitt)[0] # Get the chatbot return
 
     # Delete the trash
     responser = responser.replace("']", "")
     responser = responser.replace('"]', "")
+    responser = responser.replace('\n', "")
+
+    #print("Responser: " + responser)
+    #print("History: " + history)
 
     return responser # Return the chatbot return
 
@@ -108,6 +113,7 @@ def get_intent(response):
 
         intent = response.split("{intent=")[1]
         intent = intent.replace("}", "")
+        intent = intent.lower()
 
         msg.informative("Intent: " + intent)
         return responser, intent
@@ -124,16 +130,16 @@ def predict(input, history):
 
     # Dict with the parameters
     generate_kwargs = dict(
-        temperature=0.3,
         max_new_tokens=50,
-        seed=random_seed,
-        top_k = 10000,
+        seed=1,
+        top_k = 500,
     )
 
     # Prompt input
     promp_input = {"inputs": intput, "parameters": generate_kwargs}
 
     # Request part
+    #print(promp_input)
     response = requests.post(API_URL, headers=headers, json=promp_input)
     
     treated_response = delete_trash(response, history) # Delete the trash
@@ -150,5 +156,6 @@ if __name__ == "__main__":
     while True:
         chat = input("User: ")
         history, resp, intent = predict(input=chat, history=history)
-        print("Assistent: " + resp)
-        print("Intent: " + intent + "\n")
+        #print(history)
+        #print("Assistent: " + resp)
+        #print("Intent: " + intent + "\n")
