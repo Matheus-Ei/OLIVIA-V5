@@ -1,10 +1,11 @@
 # Import the Libraries
 import requests
 import system.messages as msg
+import system.config.operations as op
 
-# Define the API URL and the headers
-API_URL = "https://api-inference.huggingface.co/models/SamLowe/roberta-base-go_emotions"
-headers = {"Authorization": "Bearer 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"}
+# Define the API URL and the autorization token
+API_URL = op.load("system\config\ia.yaml", "roberta_emotion")
+headers = {"Authorization": "Bearer " + op.load("system\config\ia.yaml", "api_token")}
 
 # Funcion to say the emotions
 def predict(inputs):

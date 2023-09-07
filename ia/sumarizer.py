@@ -1,10 +1,11 @@
 # Import the Libraries
 import requests
 import system.messages as msg
+import system.config.operations as op
 
-# Load the model and tokenizer
-API_URL = "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
-headers = {"Authorization": "Bearer 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"}
+# Define the API URL and the autorization token
+API_URL = op.load("system\config\ia.yaml", "facebook_bart_large")
+headers = {"Authorization": "Bearer " + op.load("system\config\ia.yaml", "api_token")}
 
 
 # Funcion to sumarize the text
@@ -30,7 +31,6 @@ def sumarize(text):
 
     # Dict with the parameters
     generate_kwargs = dict(
-        temperature=1.0,
         max_length=300,
         min_length=100,)
 

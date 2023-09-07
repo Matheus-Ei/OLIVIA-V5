@@ -1,0 +1,17 @@
+# API Token
+api_token: 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
+
+
+# Text Generation Model
+phind_code_llama: "https://api-inference.huggingface.co/models/Phind/Phind-CodeLlama-34B-v2"
+wizard_coder: "https://api-inference.huggingface.co/models/WizardLM/WizardCoder-Python-34B-V1.0"
+guanaco_33b: "https://api-inference.huggingface.co/models/timdettmers/guanaco-33b-merged"
+
+# Text Classification Model
+roberta_emotion: "https://api-inference.huggingface.co/models/SamLowe/roberta-base-go_emotions"
+
+# Question Awnsering Model
+bert_large: "https://api-inference.huggingface.co/models/deepset/bert-large-uncased-whole-word-masking-squad2"
+
+# Sumarization Model
+facebook_bart_large: "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"

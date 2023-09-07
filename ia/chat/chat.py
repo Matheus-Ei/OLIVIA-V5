@@ -1,18 +1,19 @@
 # Import the Libraries
 import requests
 import random
-import re
-#import system.messages as msg
+import system.messages as msg
+import system.config.operations as op
 
 
-#API_URL = "https://api-inference.huggingface.co/models/timdettmers/guanaco-33b-merged"
-#API_URL = "https://api-inference.huggingface.co/models/WizardLM/WizardCoder-Python-34B-V1.0"
 
 # Define the API URL and the autorization token
-API_URL = "https://api-inference.huggingface.co/models/Phind/Phind-CodeLlama-34B-v2"
-headers = {"Authorization": "Bearer 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"}
+API_URL = op.load("system\config\ia.yaml", "phind_code_llama")
+headers = {"Authorization": "Bearer " + op.load("system\config\ia.yaml", "api_token")}
+
+# Define the file to save the last conversations
 file = r"ia\chat\last_conversations.txt"
 
+# Funcion to Get the system variable
 def get_system(file):
     # Funcion to Get the last lines of the file
     def get_last_lines(file):
@@ -20,32 +21,26 @@ def get_system(file):
         # Open the file
         with open(file, "r") as f:
             linhas = f.readlines()
-            tamanho = len(linhas)
+            tamanho = len(linhas) # Get the number of lines
 
             # If the file have more than 4 lines
-            array = list(linhas)
+            array = list(linhas) # Convert to list
             
-
-            # Retorna as últimas 4 linhas do arquivo.
+            # Recover the last lines
             us1 =  array[tamanho-4]
             us1 = str(us1)
-
             ass1 = array[tamanho-3]
             ass1 = str(ass1)
-
             us2 = array[tamanho-2]
             us2 = str(us2)
-
             ass2 = array[tamanho-1]
             ass2 = str(ass2)
 
+            return us1, ass1, us2, ass2 # Return the last lines
 
-            return us1, ass1, us2, ass2
+    us1, ass1, us2, ass2 = get_last_lines(file) # Get the last lines
 
-
-    us1, ass1, us2, ass2 = get_last_lines(file)
-
-
+    # Define the system variable
     system = (
         "\nSistem: Lívia is an artificial intelligence created to talk with the user"
         "Lívia is tuned to be helpful, honest, friendly, and emotional"
@@ -56,41 +51,38 @@ def get_system(file):
         f"{ass2}"
         " \nAssistent:"
     )
-    return system
-
-
-system = get_system(file)
+    return system # Return the system variable
+system = get_system(file) # Get the system variable
 
 
 # Funcion to get the prompt
-global i
 def get_prompt(input_user):
     prompt = "\nUser: " + input_user + "\n" + "Assistent:"
     return prompt
 
 
+# Funcion to write the line in the file
 def write_line_file(file, text, type):
     if type == "assis":
-        # Abre o arquivo para escrita.
+        # Open the file to write
         with open(file, "a") as f:
-            # Escreve a linha no arquivo.
+            # Write the line in the file
             f.write("\nAssistent: " + text)
     elif type == "user":
-        # Abre o arquivo para escrita.
+        # Open the file to write
         with open(file, "a") as f:
-            # Escreve a linha no arquivo.
+            # Write the line in the file
             f.write("\nUser: " + text)
 
 
 # Funcion to delete the trash
 def delete_trash(response, history):
-    response = response.json()
-    history = str(history)
+    response = response.json() # Convert json
+    history = str(history) # Convert to string
 
     # Select the content inside the generated_text
     response = [item['generated_text'] for item in response][0]
     responser = response # Convert to string
-    #print(responser)
 
 
     # Split the responses between the user and the chatbot
@@ -128,11 +120,11 @@ def delete_trash(response, history):
 
 # Funcion to predict the response
 def predict(input):
-    write_line_file(file, input, "user")
-    system = get_system(file)
-    #msg.informative("Chatbot Funcion")
+    write_line_file(file, input, "user") # Write the user input in the file
+    system = get_system(file) # Update the system variable
+    msg.informative("Chatbot Funcion")
 
-    random_seed = random.randint(0, 50)
+    random_seed = random.randint(0, 50) # Define the random seed
 
     # Dict with the parameters
     generate_kwargs = dict(
@@ -145,16 +137,14 @@ def predict(input):
     promp_input = {"inputs": str(system), "parameters": generate_kwargs}
 
     # Request part
-    #print(system)
     response = requests.post(API_URL, headers=headers, json=promp_input)
     
     treated_response = delete_trash(response, system) # Delete the trash
 
-    write_line_file(file, treated_response, "assis")
-    
-    system = get_system(file)
+    write_line_file(file, treated_response, "assis") # Write the chatbot return in the file
+    system = get_system(file) # Update the system variable
 
-    return treated_response # Return the history and the chatbot return
+    return treated_response # Return the chatbot return
 
 
 # To test the code

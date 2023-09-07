@@ -1,12 +1,12 @@
 # Import the Libraries
 import requests
 import random
-import re
+import system.config.operations as op
 
 
 # Define the API URL and the autorization token
-API_URL = "https://api-inference.huggingface.co/models/Phind/Phind-CodeLlama-34B-v2"
-headers = {"Authorization": "Bearer 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"}
+API_URL = op.load("system\config\ia.yaml", "phind_code_llama")
+headers = {"Authorization": "Bearer " + op.load("system\config\ia.yaml", "api_token")}
 
 # Define the tasks
 tasks = "{GENERATE_IMAGE}, {TALK_HOUR}, {TALK_WEATHER}, {PLAY_MUSIC}, {STOP_MUSIC}, {SEARCH_ON_GOOGLE},{NONE}"
@@ -19,7 +19,6 @@ def delete_trash(response, history):
     # Select the content inside the generated_text
     response = [item['generated_text'] for item in response][0]
     responser = response # Convert to string
-    #print(responser)
 
 
     # Split the responses between the user and the chatbot
@@ -75,9 +74,8 @@ def predict(input):
 
     # Dict with the parameters
     generate_kwargs = dict(
-        max_new_tokens=10,
+        #max_new_tokens=10,
         seed=random_seed,
-        #top_k = 5000,
     )
 
     # Prompt input

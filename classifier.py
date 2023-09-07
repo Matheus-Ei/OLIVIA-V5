@@ -50,11 +50,9 @@ def main():
                 if "TALK_HOUR" in task:
                     ex.time()
 
-
                 # Funcion to Search
                 elif "SEARCH_ON_GOOGLE" in task:
                     ex.search(text_audio)
-
                 
                 else:
                     response = chat.predict(tra_input_prompt) # Predict the response

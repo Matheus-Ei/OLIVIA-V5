@@ -1,9 +1,10 @@
 # Import the Libraries
 import requests
+import system.config.operations as op
 
-# Define the API URL and the headers
-API_URL = "https://api-inference.huggingface.co/models/deepset/bert-large-uncased-whole-word-masking-squad2"
-headers = {"Authorization": "Bearer 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"}
+# Define the API URL and the autorization token
+API_URL = op.load("system\config\ia.yaml", "bert_large")
+headers = {"Authorization": "Bearer " + op.load("system\config\ia.yaml", "api_token")}
 
 # Funcion to get the response
 def response(question, context):
@@ -13,6 +14,7 @@ def response(question, context):
 
 	# Response tratament
 	response = response.json()
+	response = response[0]
 	response = response["answer"]
 
 	return response # Return the response

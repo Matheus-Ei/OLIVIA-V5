@@ -1,100 +1,94 @@
 # Import the Libraries
 import requests
 import random
+import system.config.operations as op
 
 
 # Define the API URL and the autorization token
-API_URL = "https://api-inference.huggingface.co/models/Phind/Phind-CodeLlama-34B-v2"
-headers = {"Authorization": "Bearer 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"}
+API_URL = op.load("system\config\ia.yaml", "phind_code_llama")
+headers = {"Authorization": "Bearer " + op.load("system\config\ia.yaml", "api_token")}
 
-
-# Define the system prompt
-system = (
-    "\nSistem: the prompt is programmed to rewrite all user input with other words, but keeping the meaning of sentences"
-    "user: rewrite 'now its 10:10 am'\n"
-    "prompt: 'its 10:10 of morning now'\n"
-    "user: rewrite 'hi, how are u?'\n"
-    "prompt: 'hey are you fine?'\n"
-)
-
-# Funcion to get the prompt
-global i
-i = 0
-def get_prompt(input_user):
-    global i
-    if i == 0:
-        i = i + 1
-        prompt = system + "user: " + input_user + "\n" + "prompt:"
-        return prompt
-    
-    else:
-        prompt = "\nuser: " + input_user + "\n" + "prompt:"
-        return prompt
-
-
-# Funcion to get the history
-def get_history(inputs,history):
-    atual_input = get_prompt(inputs)
-    history = str(history)
-    history = history + atual_input
-    return history, history
-
-
-# Funcion to add the chatbot return to the history
-def add_chatbot_return(bot_return, history):
-    history = str(str(history) + str(bot_return))
-    return str(history)
-
+# Define the tasks
+tasks = "{GENERATE_IMAGE}, {TALK_HOUR}, {TALK_WEATHER}, {PLAY_MUSIC}, {STOP_MUSIC}, {SEARCH_ON_GOOGLE},{NONE}"
 
 # Funcion to delete the trash
 def delete_trash(response, history):
     response = response.json()
     history = str(history)
 
-    # Selecionar o conteúdo dentro de 'generated_text'
-    response = [item['generated_text'] for item in response]
-    responser = str(response)
+    # Select the content inside the generated_text
+    response = [item['generated_text'] for item in response][0]
+    responser = response # Convert to string
 
-    responser = responser.split("user:", -1)[-1]
-    responser = responser.split("prompt:", 1)[0]
+    # Split the responses between the user and the chatbot
+    exitt = []
+    responser = responser.split("User:")
+    for resp in responser:
+        respt = resp.split("Assistent:")
+        for it in respt:
+            exitt.append(it)
 
+    # Split the history between the user and the chatbot
+    exitt_hist = []
+    resp_history = history.split("User:") 
+    for resp_h in resp_history:
+        respt_h = resp_h.split("Assistent:")
+        for it_h in respt_h:
+            exitt_hist.append(it_h)
+
+    # Delete the intersection
+    for itm in exitt_hist:
+        if itm in exitt:
+            exitt.remove(itm)
+
+
+    responser = list(exitt)[0] # Get the chatbot return
+ 
+
+    # Delete the trash
     responser = responser.replace("']", "")
     responser = responser.replace('"]', "")
-    responser = responser.replace('\\n', "")
-    responser = responser.replace("\\", "")
+    responser = responser.replace('\n', "")
 
-    return responser
+    return responser # Return the chatbot return
+
 
 
 # Funcion to predict the response
-def predict(input, history):
-    intput, history = get_history(input,history)
-    random_seed = random.randint(0, 50)
+def predict(input):
+    system = (
+        "\nSistem: when the input enters, the model classifies it into which type of task from the following options:\n"
+        f"Possibles Tasks: {tasks}"
+        "User: hello how are u?"
+        "Assistent: NONE"
+        "User: hey, can you generate a image to me please?"
+        "Assistent: {GENERATE_IMAGE}"
+        "User: livia, talk the weather please"
+        "Assistent: {TALK_WEATHER}"
+        f"User: {input}"
+        "Assistent:"
+    )
+
+    random_seed = random.randint(0, 50) # Define the random seed
 
     # Dict with the parameters
     generate_kwargs = dict(
-        temperature=1,
-        max_new_tokens=100,
+        max_new_tokens=10,
         seed=random_seed,
-        top_k = 50,
     )
 
     # Prompt input
-    promp_input = {"inputs": intput, "parameters": generate_kwargs}
-
-    # Request part
+    promp_input = {"inputs": str(system), "parameters": generate_kwargs}
     response = requests.post(API_URL, headers=headers, json=promp_input)
-    
-    treated_response = delete_trash(response, history) # Delete the trash
-    history = add_chatbot_return(treated_response, history) # Add the chatbot return to the history
 
-    print("Output: " + treated_response) # Print the chatbot return
-    return history, treated_response # Return the history and the chatbot return
+    responser = delete_trash(response, system) # Delete the trash
+
+    return responser # Return the chatbot return
 
 
 # To test the code
 if __name__ == "__main__":
-    history = ""
     while True:
-        chat = input("Input: ")
-        history, resp = predict(input=chat, history=history)
+        chat = input("User: ")
+        resp = predict(input=chat)
+        print("Assistent: " + resp)
