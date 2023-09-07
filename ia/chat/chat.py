@@ -11,7 +11,7 @@ import re
 # Define the API URL and the autorization token
 API_URL = "https://api-inference.huggingface.co/models/Phind/Phind-CodeLlama-34B-v2"
 headers = {"Authorization": "Bearer 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"}
-file = r"ia\last_conversations.txt"
+file = r"ia\chat\last_conversations.txt"
 
 def get_system(file):
     # Funcion to Get the last lines of the file

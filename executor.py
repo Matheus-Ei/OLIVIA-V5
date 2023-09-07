@@ -15,7 +15,7 @@ import system.messages as msg
 # IA imports
 msg.informative("Importing Executor IA")
 import ia.sumarizer as sumarizer
-import ia.chat as chat_gen
+import ia.chat.chat as chat_gen
 import ia.questions as questions
 
 

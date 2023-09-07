@@ -13,7 +13,8 @@ import modules.sounds.voice as voice
 import modules.translator as translator
 
 # Import IAs
-import ia.chat as chat
+import ia.chat.chat as chat
+import ia.classification as classification
 
 
 # Main function to back-end
@@ -40,21 +41,25 @@ def main():
 
 
                 # Chatbot part
-                history = ""
                 tra_input_prompt = translator.translation(str(text_audio), "en") # Translate to English
-                history, response, intent = chat.predict(tra_input_prompt, history) # Predict the response
-                trans_response = translator.translation(str(response), "pt") # Translate to Portuguese
-                voice.speak(trans_response) # Speak the response
+                task = classification.predict(tra_input_prompt) # Predict the task
+                msg.informative(task)
 
 
                 #Funcion to Speak Time
-                if "talk_current_time" in intent:
+                if "TALK_HOUR" in task:
                     ex.time()
 
 
                 # Funcion to Search
-                elif "search_on_google" in intent:
+                elif "SEARCH_ON_GOOGLE" in task:
                     ex.search(text_audio)
+
+                
+                else:
+                    response = chat.predict(tra_input_prompt) # Predict the response
+                    trans_response = translator.translation(str(response), "pt") # Translate to Portuguese
+                    voice.speak(trans_response) # Speak the response
 
 
                 # Incert a log
