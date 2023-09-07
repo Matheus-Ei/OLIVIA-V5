@@ -8,7 +8,6 @@ from datetime import datetime
 print(colorama.Fore.GREEN + "--> Importing Executor Modules <--" + colorama.Fore.RESET)
 import modules.sounds.voice as voice
 import modules.translator as translator
-import database.operations as dbOp
 import modules.search as searchf
 import system.messages as msg
 
@@ -34,7 +33,6 @@ def time():
 def search(text):
     # Funcion to search in the wikipedia
     if "wikipédia" in text:
-        text = dbOp.question_answer("search", text) # Remove the question from the text
         voice.speak("Pesquisando na Wikipedia por: " + text) # Speak the search
 
         tran_text = translator.translation(text, "en") # Translate to English

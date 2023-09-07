@@ -8,9 +8,9 @@ import speech_recognition as sr
 import system.messages as msg
 
 # Inits the engines
-pygame.init() # Init the pygame to reproduces the voice
 engine = pyttsx3.init() # Starts the text-speack
 r = sr.Recognizer() # Creating the Speach Recognition and defines the openai key
+pygame.init() # Init the pygame to reproduces the voice
 
 
 # Function for fast speech, but with lower quality
@@ -87,10 +87,3 @@ def listening():
 
             except sr.UnknownValueError:
                 msg.error("Unknown Value Error")
-
-
-# To Test the Funcions
-if __name__ == "__main__":
-    fast_speak("Esse é um teste de voz para saber como está ficando")
-    fast_speak("Esse é um teste de voz para saber como está ficando isso")
-    fast_speak("como está ficando isso?")

@@ -102,3 +102,7 @@ User: I'm playing alone in fact it's because I'm playing server right as I told 
 Assistent: I understand that you're playing on a server by yourself. Here are some additional tips to help you cope with your frustration:1. Practice patience: Bed Wars is a fast-paced game, and it's normal to make mistakes. Try to be more patient with yourself and accept that it's part of the game.2. Learn from your mistakes: Instead of getting angry, try to learn from your mistakes and use them as a learning
 User: See the two over the game *****
 Assistent: I'm not sure what you're asking about the two over the game. Could you please clarify your question?
+User: renan para as brother and i say never the horizon megane
+Assistent: It seems like you're mentioning two different games: "Never the Horizon" and "Megane." Could you please clarify which game you're referring to or what specific information you're looking for?
+User: Hello Lívia how are you
+Assistent: I'm an AI language model, so I'm doing well, thank you! How can I help you today?

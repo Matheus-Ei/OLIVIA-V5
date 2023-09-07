@@ -2,11 +2,9 @@
 import colorama
 print(colorama.Fore.GREEN + "--> Importing Libraries <--" + colorama.Fore.RESET)
 import speech_recognition as sr
-import threading
 
 # Modules imports
 print(colorama.Fore.GREEN + "--> Importing Modules <--" + colorama.Fore.RESET)
-import database.operations as dbOp
 import executor as ex
 import system.messages as msg
 import modules.sounds.voice as voice
@@ -62,7 +60,6 @@ def main():
 
                 # Incert a log
                 msg.waring("Inserting a Log")
-                #dbOp.log_insert(text_audio, response)
        
             # To unknown values
             except sr.UnknownValueError:
@@ -73,5 +70,4 @@ def main():
 if __name__ == "__main__":    
     if True:
         # Starts a thread to the back-end code
-        main_thread = threading.Thread(target=main)
-        main_thread.start()
+        main()
