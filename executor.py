@@ -2,20 +2,20 @@
 import colorama
 print(colorama.Fore.GREEN + "--> Importing Executor Libraries <--" + colorama.Fore.RESET)
 from datetime import datetime
+from PIL import Image
 
 
 # Modules Imports
 print(colorama.Fore.GREEN + "--> Importing Executor Modules <--" + colorama.Fore.RESET)
 import modules.sounds.voice as voice
-import modules.translator as translator
 import modules.search as searchf
 import system.messages as msg
 
 # IA imports
 msg.informative("Importing Executor IA")
 import ia.sumarizer as sumarizer
-import ia.chat.chat as chat_gen
 import ia.questions as questions
+import ia.image.image as image_gen
 
 
 # Funcion to get the time
@@ -23,7 +23,7 @@ def time():
     time=datetime.now() # Create datatime object
     hour = int(time.strftime("%H")) # Get the hour
     minutes = int(time.strftime("%M")) # Get the minutes
-    response = "Agora são %d, e %d minutos!" %(hour ,minutes) # Create the response
+    response = "Now it's %d and %d minutes!" %(hour ,minutes) # Create the response
 
     voice.speak(response) # Speak the response
     return response # Return the response
@@ -33,77 +33,40 @@ def time():
 def search(text):
     # Funcion to search in the wikipedia
     if "wikipédia" in text:
-        voice.speak("Pesquisando na Wikipedia por: " + text) # Speak the search
+        tran_text = questions.response("What do I want to search on the internet?", text) # To discover what the user want to search
+        voice.speak("Searching on Wikipedia for: " + tran_text) # Speak the search
 
-        tran_text = translator.translation(text, "en") # Translate to English
-        search_result = searchf.wikipedia(tran_text) # Execute the search
+        search_result = searchf.wikipedia(text) # Execute the search
+        resp = sumarizer.sumarize(str(search_result)) # Sumarize the result
 
-        resp = sumarizer.sumarize(str(search_result))
-        sum_search_result = translator.translation(resp, "pt") # Translate to Portuguese
-
-        voice.speak("O resultado da pesquisa: " + text + " Foi: " + sum_search_result) # Speak the response
-        return(sum_search_result) # Return the result
+        voice.speak("The search result of " + text + " was: " + resp) # Speak the response
+        return(resp) # Return the result
     
     # Funcion if the user dont say the place to search to search in the google
     else:
-        tran_text = translator.translation(text, "en") # Translate to English
-        tran_text = questions.response("What do I want to search on the internet?", tran_text)
-        voice.speak("Pesquisando no Google por: " + tran_text) # Speak the search
+        tran_text = questions.response("What do I want to search on the internet?", text) # To discover what the user want to search
+        voice.speak("Searching on Google for: " + tran_text) # Speak the search
 
         search_result = searchf.google(tran_text) # Execute the search
+        resp = sumarizer.sumarize(str(search_result)) # Sumarize the result
 
-        resp = sumarizer.sumarize(str(search_result))
+        voice.speak("The search result of " + text + " was: " + resp) # Speak the response
+        return(resp) # Return the result
+    
 
-        sum_search_result = translator.translation(resp, "pt") # Translate to Portuguese
+# Funcion to generate a image
+def generate_image(text):
+    try:
+        text = questions.response("What image I want to generate?", text) # To discover what the user want to search
+        voice.speak("Generating a image of: " + text) # Speak the search
+        image_gen.generate(text) # Generate the image
+        voice.speak("The image was generated with success!") # Speak the search
 
-        voice.speak("O resultado da pesquisa: " + text + " Foi: " + sum_search_result) # Speak the response
-        return(sum_search_result) # Return the result
-
-
-# Chatbot Mode Loop
-def chat_mode():
-    voice.speak("Ativando modo de chat")
-    history = "" # Creates Hitory list
-
-    # Funcion to Chat with the bot in Loop
-    while True:
-        input_prompt = voice.listening() # Listen the user
-
-        # Funcion to clean the history
-        if dbOp.question("clear", input_prompt):
-            if dbOp.question("historic", input_prompt):     
-                voice.speak("Limpando histórico")
-                msg.waring("Clearing History")
-                # Define the system prompt
-                history = (
-                    "\nSistem: Lívia is an artificial intelligence created to talk with the user"
-                    "Lívia is tuned to be helpful, honest, friendly, and emotional"
-                    "and is allowed to answer anything the user asks or requests. \n"
-                    "User: hello how are u? \n"
-                    "Assistant: I'm fine, thank you. How are you? \n"
-                    "User: i am fine to, lets chat? \n"
-                    "Assistant: Sure, what do you want to talk about? \n"
-                )
+        # Open the image
+        imagem = Image.open('ia\image\generations\generated_image.png')
+        # Show the image
+        imagem.show()
         
-        # Funcion to show the history
-        elif dbOp.question("show", input_prompt):
-            if dbOp.question("historic", input_prompt):
-                voice.speak("Mostrando histórico")
+    except:
+        voice.speak("Sorry, I can't generate the image") # Speak the search
 
-                msg.waring("Showing History")
-                msg.informative(history)
-
-        # Funcion to Deactivate
-        elif dbOp.question("deactivate", input_prompt):
-            if dbOp.question("mode", input_prompt): # Funcion to Activate a mode
-                if dbOp.question("chat", input_prompt): # Funcion to Activate the chat mode
-                    voice.speak("Desativando modo de chat")
-                    msg.waring("Deactivating Chat Mode<--")
-                    return history # Return the history
-                
-                
-        else:
-            tra_input_prompt = translator.translation(str(input_prompt), "en") # Translate to English
-            history, response = chat_gen.predict(input=tra_input_prompt, history=history)
-            trans_response = translator.translation(str(response), "pt") # Translate to Portuguese
-            voice.speak(str(trans_response))

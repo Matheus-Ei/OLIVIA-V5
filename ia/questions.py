@@ -14,7 +14,7 @@ def response(question, context):
 
 	# Response tratament
 	response = response.json()
-	response = response[0]
+	#response = response[0]
 	response = response["answer"]
 
 	return response # Return the response

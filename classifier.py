@@ -8,7 +8,6 @@ print(colorama.Fore.GREEN + "--> Importing Modules <--" + colorama.Fore.RESET)
 import executor as ex
 import system.messages as msg
 import modules.sounds.voice as voice
-import modules.translator as translator
 
 # Import IAs
 import ia.chat.chat as chat
@@ -32,15 +31,14 @@ def main():
             msg.continuation("Listening")
             try:
                 basic_audio = r.listen(source)
-                text_audio=(r.recognize_google(basic_audio, language="pt-br"))
+                text_audio=(r.recognize_google(basic_audio, language="en-us"))
                 text_audio = text_audio.lower() 
                 msg.continuation("Recognizing")
                 msg.user(text_audio)
 
 
                 # Chatbot part
-                tra_input_prompt = translator.translation(str(text_audio), "en") # Translate to English
-                task = classification.predict(tra_input_prompt) # Predict the task
+                task = classification.predict(text_audio) # Predict the task
                 msg.informative(task)
 
 
@@ -51,15 +49,21 @@ def main():
                 # Funcion to Search
                 elif "SEARCH_ON_GOOGLE" in task:
                     ex.search(text_audio)
+
+                # Funcion to Generate Image
+                elif "GENERATE_IMAGE" in task:
+                    ex.generate_image(text_audio)
                 
+
+                # Funcion to Talk with the assistent
                 else:
-                    response = chat.predict(tra_input_prompt) # Predict the response
-                    trans_response = translator.translation(str(response), "pt") # Translate to Portuguese
-                    voice.speak(trans_response) # Speak the response
+                    response = chat.predict(text_audio) # Predict the response
+                    voice.speak(response) # Speak the response
 
 
                 # Incert a log
                 msg.waring("Inserting a Log")
+       
        
             # To unknown values
             except sr.UnknownValueError:

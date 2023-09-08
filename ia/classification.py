@@ -9,7 +9,7 @@ API_URL = op.load("system\config\ia.yaml", "phind_code_llama")
 headers = {"Authorization": "Bearer " + op.load("system\config\ia.yaml", "api_token")}
 
 # Define the tasks
-tasks = "{GENERATE_IMAGE}, {TALK_HOUR}, {TALK_WEATHER}, {PLAY_MUSIC}, {STOP_MUSIC}, {SEARCH_ON_GOOGLE},{NONE}"
+tasks = "{GENERATE_IMAGE}, {ASKING_SCHEDULE}, {SEARCH_ON_GOOGLE},{NONE}"
 
 # Funcion to delete the trash
 def delete_trash(response, history):

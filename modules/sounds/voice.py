@@ -10,7 +10,7 @@ import system.messages as msg
 # Inits the engines
 engine = pyttsx3.init() # Starts the text-speack
 r = sr.Recognizer() # Creating the Speach Recognition and defines the openai key
-pygame.init() # Init the pygame to reproduces the voice
+pygame.init() # Init the pygame to reproduces the voices
 
 
 # Function for fast speech, but with lower quality
@@ -35,7 +35,7 @@ def fast_speak(texto):
 # Function for normal speech, longer, but with better quality
 def speak(data):
     # Voices
-    voice = 'pt-BR-AntonioNeural'
+    voice = 'en-US-JennyNeural'
     voice2 = 'pt-BR-FranciscaNeural'
 
     # Data treatment
@@ -45,7 +45,7 @@ def speak(data):
 
     # Command Definition
     try:
-        command = f'edge-tts --rate="+40%" --voice "{voice2}" --text "{data}" --write-media "modules\sounds\data.mp3"'
+        command = f'edge-tts --rate="+5%" --voice "{voice}" --text "{data}" --write-media "modules\sounds\data.mp3"'
         os.system(command) # Sends the command to CMD
     
         pygame.mixer.init()
@@ -80,7 +80,7 @@ def listening():
             msg.continuation("Listening")
             try:
                 basicAudio = r.listen(source)
-                textAudio=(r.recognize_google(basicAudio, language="pt-br"))
+                textAudio=(r.recognize_google(basicAudio, language="en-us"))
                 textAudio = textAudio.lower() 
                 msg.user(textAudio)
                 return textAudio
