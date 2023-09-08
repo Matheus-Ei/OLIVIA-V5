@@ -237,3 +237,17 @@ Assistent: If you have any other questions or need assistance, please don't hesi
 User: hello again if you leave here
 Assistent: Hello! I'm always here to help you. How can I assist you today?
 User: can you generate the emoji for a dog
+User: hello olivia
+Assistent: Hello! I'm Lívia, your AI assistant. How can I help you today?
+User: hello olivia
+Assistent: Hello! I'm Lívia, your AI assistant. How can I help you today?
+User: hello what's your name
+Assistent: Hello! My name is Lívia. I'm here to help you with anything you need. How can I assist you today?
+User: your name is not olivia olivia
+Assistent: I apologize for the confusion. My name is Lívia, not Olivia. How can I help you today?
+User: okay can we chat
+Assistent: Of course! What would you like to chat about?
+User: i don't know can you suggest something
+Assistent: Sure! Let's talk about the importance of mental health and how to maintain it. What are your thoughts on this topic?
+User: what's your name
+Assistent: My name is Olivia. I'm an AI language model, here to help and assist you. How can I help you today?
