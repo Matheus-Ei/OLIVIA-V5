@@ -66,6 +66,7 @@ def generate_image(text):
         imagem = Image.open('ia\image\generations\generated_image.png')
         # Show the image
         imagem.show()
+        voice.speak("Image was copied to the clipboard") # Speak the search
         
     except:
         voice.speak("Sorry, I can't generate the image") # Speak the search

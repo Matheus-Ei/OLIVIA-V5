@@ -234,3 +234,6 @@ User: i'm so sad because i left the coffee out
 Assistent: I'm sorry to hear that. It's important to remember that spilled coffee can cause a lot of damage to your belongings and the environment. Here are some tips to help you feel better:1. Clean up the spill immediately to prevent further damage.2. Use a damp cloth or paper towels to soak up the coffee.3. If possible, use a coffee stain remover to help remove the stain.4
 User: yeah i know
 Assistent: If you have any other questions or need assistance, please don't hesitate to ask. I'm here to help.
+User: hello again if you leave here
+Assistent: Hello! I'm always here to help you. How can I assist you today?
+User: can you generate the emoji for a dog

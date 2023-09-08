@@ -2,20 +2,25 @@
 import io
 from PIL import Image
 import requests
+import system.config.operations as op
+import system.messages as msg
+import random
 
 
 # Define the API URL and the headers
-TEXT_API_URL = "https://api-inference.huggingface.co/models/daspartho/prompt-extend"
-API_URL = "https://api-inference.huggingface.co/models/DucHaiten/DucHaitenJourney"
-headers = {"Authorization": "Bearer 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"}
+TEXT_API_URL = op.load("system\config\ia.yaml", "prompt_extend")
+API_URL = op.load("system\config\ia.yaml", "DucHaiten")
+headers = {"Authorization": "Bearer " + op.load("system\config\ia.yaml", "api_token")}
 
 
 # Define the prompt function
 def prompt(input_prompt):
+	random_seed = random.randint(0, 50)
 	# Prompt tratament
 	input_prompt = "Generated Prompt " + input_prompt
 	generate_kwargs = dict(
         max_new_tokens=100,
+		seed=random_seed,
     )
 	
 	output = ({"inputs": input_prompt, "parameters": generate_kwargs}) # Define the output
@@ -23,7 +28,15 @@ def prompt(input_prompt):
 	
     # Response tratament
 	rr = response.json()
-	response = rr[0]["generated_text"]
+	try:
+		response = rr[0]["generated_text"]
+		msg.error("Error to Generate the prompt to the image, triyng again with another prompt")
+	except:
+		try:
+			response = rr["generated_text"]
+			msg.error("Error to Generate the prompt of the image, triyng again with another prompt")
+		except:
+			response = rr
 	response = response.replace("Generated Prompt ", "")
     
 	return response # Return the response
