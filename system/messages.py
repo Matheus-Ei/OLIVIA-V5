@@ -1,5 +1,6 @@
 # Import Libraries
 import colorama
+import modules.sounds.audios as audios
 
 # waring message
 def waring(msg):
@@ -12,6 +13,8 @@ def informative(msg):
 # error message
 def error(msg):
     print(colorama.Fore.RED + "#####==-> "+ msg +" <-==#####" + colorama.Fore.RESET)
+    #audios.play(r"modules\sounds\audios\main_error.mp3")
+
 
 # continuation message
 def continuation(msg):

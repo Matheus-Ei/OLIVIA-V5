@@ -1,6 +1,7 @@
 # Import the Libraries
 import requests
 import system.config.operations as op
+import system.messages as msg
 
 # Define the API URL and the autorization token
 API_URL = op.load("system\config\ia.yaml", "bert_large")
@@ -12,10 +13,18 @@ def response(question, context):
 
 	response = requests.post(API_URL, headers=headers, json=prompt) # Send the request to the API
 
-	# Response tratament
-	response = response.json()
-	#response = response[0]
-	response = response["answer"]
+    # Response tratament
+	rr = response.json()
+	try:
+		response = rr[0]
+		response = response["answer"]
+		msg.error("Error to Generate the prompt to the image, triyng again with another prompt")
+	except:
+		try:
+			response = rr["answer"]
+			msg.error("Error to Generate the prompt of the image, triyng again with another prompt")
+		except:
+			response = rr
 
 	return response # Return the response
 	
