@@ -4,20 +4,20 @@ import executor as ex
 import modules.sounds.voice as voice
 import modules.sounds.audios as audios
 audios.play(r"modules\sounds\audios\init_process.mp3") # Audio to inform that the process is starting
-audios.play(r"modules\sounds\default_voices\the_modules_were_imported.mp3")
 msg.informative("Modules Imported")
+audios.play(r"modules\sounds\default_voices\the_modules_were_imported.mp3")
 
 # Imports Libraries
 import speech_recognition as sr
 import time
-audios.play(r"modules\sounds\default_voices\standard_libraries_were_imported.mp3")
 msg.informative("Default Libraries Imported")
+audios.play(r"modules\sounds\default_voices\standard_libraries_were_imported.mp3")
 
 # Import IAs
 import ia.chat.chat as chat
 import ia.classification as classification
-audios.play(r"modules\sounds\default_voices\artificial_intelligences_were_imported.mp3")
 msg.informative("IAs Imported")
+audios.play(r"modules\sounds\default_voices\artificial_intelligences_were_imported.mp3")
 
 
 # Main function to back-end

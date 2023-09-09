@@ -18,4 +18,4 @@ bert_large: "https://api-inference.huggingface.co/models/deepset/bert-large-unca
 facebook_bart_large: "https://api-inference.huggingface.co/models/facebook/bart-large-cnn"
 
 # Image Generation
-DucHaiten: "https://api-inference.huggingface.co/models/DucHaiten/DucHaitenJourney"
+DucHaiten: "https://api-inference.huggingface.co/models/Yntec/DucHaitenAnime768"

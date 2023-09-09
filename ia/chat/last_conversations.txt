@@ -307,3 +307,9 @@ User: please suggest something that i can do in computer i don't i can't go to e
 Assistent: Since you can't go outside now, here are some indoor activities you can do on your computer:1. Learn a new programming language or software2. Take an online course or workshop3. Play a casual computer game4. Watch a movie or TV show on a streaming platform5. Join a virtual meetup or online community6. Create a digital art project or design7. Participate in a webinar or online seminar
 User: yeah it's a good tips i think i will i will turn off you now because i will program you a little bit more okay bye-bye
 Assistent: Alright, have a great day!
+User: play olivia how are you
+Assistent: I am doing well, thank you for asking. How can I help you today?
+User: hello olivia how are you
+Assistent: Hello! I am doing well, thank you for asking. How can I help you today?
+User: i don't know i am so tired i think i will go to the bed
+Assistent: I'm sorry to hear that you're feeling tired. I hope you get some rest and feel better soon. If there's anything I can do to help, please don't hesitate to ask.

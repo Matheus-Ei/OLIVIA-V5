@@ -32,7 +32,7 @@ def sumarize(text):
     # Dict with the parameters
     generate_kwargs = dict(
         max_length=300,
-        min_length=100,)
+    )
 
     try:
         # Prompt input
@@ -42,10 +42,19 @@ def sumarize(text):
 
         msg.informative("Ending the Sumarize Funcion")
 
-        ret = response.json()
-        ret = ret[0]
-        ret = ret["summary_text"]  # Correct the key to lowercase
+        # Response tratament
+        rr = response.json()
+        try:
+            response = rr[0]
+            response = response["summary_text"]
+            msg.error("Error to Generate the sumary, triyng again with another config")
+        except:
+            try:
+                response = rr["summary_text"]
+                msg.error("Error to Generate the sumary, triyng again with another config")
+            except:
+                response = rr
 
-        return str(ret)  # Return the response
+        return str(response)  # Return the response
     except:
         msg.error("Sumarizer Error")

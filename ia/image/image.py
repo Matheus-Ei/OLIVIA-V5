@@ -1,10 +1,12 @@
 # Import the Libraries
 import io
 from PIL import Image
+import PIL
 import requests
 import system.config.operations as op
 import system.messages as msg
 import random
+import modules.sounds.voice as voice
 
 
 # Define the API URL and the headers
@@ -29,15 +31,17 @@ def prompt(input_prompt):
     # Response tratament
 	rr = response.json()
 	try:
-		response = rr[0]["generated_text"]
+		response = rr[0]
+		response = response["generated_text"]
+		response = response.replace("Generated Prompt ", "")
 		msg.error("Error to Generate the prompt to the image, triyng again with another prompt")
 	except:
 		try:
 			response = rr["generated_text"]
+			response = response.replace("Generated Prompt ", "")
 			msg.error("Error to Generate the prompt of the image, triyng again with another prompt")
 		except:
 			response = rr
-	response = response.replace("Generated Prompt ", "")
     
 	return response # Return the response
 
@@ -50,8 +54,20 @@ def generate(inputt):
 	
 	# Response tratament
 	response = requests.post(API_URL, headers=headers, json=image_bytes)
-	response = response.content
+	res = response.content
+	print(response)
 	
 	# Save the image
-	image = Image.open(io.BytesIO(response))
-	image.save("ia\image\generations\generated_image.png")
+	try:
+		image = Image.open(io.BytesIO(res))
+		image.save("ia\image\generations\generated_image.png")
+		voice.speak("Image generated with success")
+		
+		# Open the image
+		img = Image.open('ia\image\generations\generated_image.png')
+		# Show the image
+		img.show()
+
+	except PIL.UnidentifiedImageError:
+		msg.error("Received invalid image data from the API")
+		voice.speak("I received a invalid image data from the API")

@@ -56,18 +56,8 @@ def search(text):
 
 # Funcion to generate a image
 def generate_image(text):
-    try:
-        text = questions.response("What image I want to generate?", text) # To discover what the user want to search
-        voice.speak("Generating a image of: " + text) # Speak the search
-        image_gen.generate(text) # Generate the image
-        voice.speak("The image was generated with success!") # Speak the search
+    text = questions.response("What image I want to generate?", text) # To discover what the user want to search
+    voice.speak("Generating a image of: " + str(text)) # Speak the search
+    image_gen.generate(text) # Generate the image
 
-        # Open the image
-        imagem = Image.open('ia\image\generations\generated_image.png')
-        # Show the image
-        imagem.show()
-        voice.speak("Image was copied to the clipboard") # Speak the search
-        
-    except:
-        voice.speak("Sorry, I can't generate the image") # Speak the search
 

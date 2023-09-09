@@ -18,11 +18,11 @@ def response(question, context):
 	try:
 		response = rr[0]
 		response = response["answer"]
-		msg.error("Error to Generate the prompt to the image, triyng again with another prompt")
+		msg.error("Error to get the answer, triyng again with another config")
 	except:
 		try:
 			response = rr["answer"]
-			msg.error("Error to Generate the prompt of the image, triyng again with another prompt")
+			msg.error("Error to get the answer, triyng again with another config")
 		except:
 			response = rr
 
