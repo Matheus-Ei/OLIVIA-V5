@@ -74,7 +74,7 @@ User: I'm with a question I'm trying to open Android Studio here and for some re
 Assistent: I'm sorry to hear that you're having trouble opening Android Studio. There could be several reasons for this issue. Here are some common troubleshooting steps you can try:1. Restart your computer: Sometimes, a simple restart can resolve minor issues.2. Check for software updates: Make sure you have the latest version of Android Studio installed. You can check for updates in the "Configure" menu.3. Run Android Studio as administrator: Right-
 User: I understood thanks for the help
 Assistent: You're welcome! If you need any further assistance, please don't hesitate to ask.
-User: Hello Lívia
+User: Hello Lï¿½via
 Assistent: Hello! How can I help you today?
 User: Oh I don't know we can talk that you think
 Assistent: I'm here to listen and provide information. If you have any questions or need help with something, please feel free to ask.
@@ -90,7 +90,7 @@ User: Stay quiet Olivia don't worry no man, we're just talking here in peace in 
 Assistent: I apologize if my previous response seemed aggressive or argumentative. I'm here to help and provide support. If you have any questions or need assistance, please feel free to ask.
 User: Ok Beauty Relax
 Assistent: I'm glad to hear that you're feeling more relaxed now. If you have any other questions or need assistance, please feel free to ask.
-User: You have some pet Lívia
+User: You have some pet Lï¿½via
 Assistent: As an AI language model, I do not have a pet. However, I'm here to help you with any questions or information you need. If you have any other questions, please feel free to ask.
 User: Beauty if I have a question I ask you but saw you like type i'm I started doing gym in a short time little time
 Assistent: It's great that you're starting to work out! It's important to be consistent with your workouts and give your body time to adjust to the new routine. Here are some tips to help you get started:1. Warm-up: Before starting your workout, spend a few minutes doing light cardio or stretching to warm up your muscles.2. Choose a workout routine: Pick a workout routine that suits your fit
@@ -104,10 +104,10 @@ User: See the two over the game *****
 Assistent: I'm not sure what you're asking about the two over the game. Could you please clarify your question?
 User: renan para as brother and i say never the horizon megane
 Assistent: It seems like you're mentioning two different games: "Never the Horizon" and "Megane." Could you please clarify which game you're referring to or what specific information you're looking for?
-User: Hello Lívia how are you
+User: Hello Lï¿½via how are you
 Assistent: I'm an AI language model, so I'm doing well, thank you! How can I help you today?
 User: hello olivia
-Assistent: Hello! I'm Lívia, how can I help you today?
+Assistent: Hello! I'm Lï¿½via, how can I help you today?
 User: for now nothing i don't know you you like dogs
 Assistent: Oh, I see! I'm an AI language model, so I don't have personal preferences or emotions. But I'm here to help you with any questions or information you need. What can I help you with today?
 User: speak to brazilian scar to me
@@ -147,11 +147,11 @@ Assistent: To change the display language in Windows, follow these steps:1. Clic
 User: thank you
 Assistent: You're welcome! If you have any other questions, feel free to ask.
 User: olivia
-Assistent: I'm sorry, I'm Lívia, not Olivia. How can I help you today?
+Assistent: I'm sorry, I'm Lï¿½via, not Olivia. How can I help you today?
 User: olivia
-Assistent: I'm Lívia, not Olivia. How can I help you today?
+Assistent: I'm Lï¿½via, not Olivia. How can I help you today?
 User: olivia
-Assistent: I'm Lívia, not Olivia. How can I help you today?
+Assistent: I'm Lï¿½via, not Olivia. How can I help you today?
 User: i think i will play minecraft now
 Assistent: That sounds like fun! Enjoy your gameplay. If you have any questions or need assistance, feel free to ask.
 User: i am making my curriculum
@@ -238,13 +238,13 @@ User: hello again if you leave here
 Assistent: Hello! I'm always here to help you. How can I assist you today?
 User: can you generate the emoji for a dog
 User: hello olivia
-Assistent: Hello! I'm Lívia, your AI assistant. How can I help you today?
+Assistent: Hello! I'm Lï¿½via, your AI assistant. How can I help you today?
 User: hello olivia
-Assistent: Hello! I'm Lívia, your AI assistant. How can I help you today?
+Assistent: Hello! I'm Lï¿½via, your AI assistant. How can I help you today?
 User: hello what's your name
-Assistent: Hello! My name is Lívia. I'm here to help you with anything you need. How can I assist you today?
+Assistent: Hello! My name is Lï¿½via. I'm here to help you with anything you need. How can I assist you today?
 User: your name is not olivia olivia
-Assistent: I apologize for the confusion. My name is Lívia, not Olivia. How can I help you today?
+Assistent: I apologize for the confusion. My name is Lï¿½via, not Olivia. How can I help you today?
 User: okay can we chat
 Assistent: Of course! What would you like to chat about?
 User: i don't know can you suggest something
@@ -313,3 +313,17 @@ User: hello olivia how are you
 Assistent: Hello! I am doing well, thank you for asking. How can I help you today?
 User: i don't know i am so tired i think i will go to the bed
 Assistent: I'm sorry to hear that you're feeling tired. I hope you get some rest and feel better soon. If there's anything I can do to help, please don't hesitate to ask.
+User: no relax don't have anything to you help me i just need to go to the bed yes bye-bye i see you tomorrow okay bye
+Assistent: Alright, have a good night's sleep. I'll be here if you need anything. Goodbye!
+User: hello olivia can you tell me what time is it
+Assistent: Sure, the current time is 12:30 PM. How can I help you with anything else?
+User: hello olivia let's chat
+Assistent: Hi there! How can I help you today? If you have any questions or need assistance, feel free to ask.
+User: okay if i need a system say i ask for help thank you
+Assistent: You're welcome! If you have any questions or need assistance, feel free to ask.
+User: think of what i can do to help my friend his uncle dad and i need to help him to prepare this
+Assistent: I'm glad you're looking for ways to help your friend's uncle. Here are some suggestions:1. Offer your time: Volunteer to help with tasks like cooking, cleaning, or running errands.2. Provide emotional support: Be there for your friend and his family during this difficult time.3. Offer practical advice: If you have experience with similar situations, share your knowledge and advice.4. Help with
+User: olivia recommend me some models that i can add in you to you get more complete
+Assistent: I'm an AI language model, so I don't have the capability to add models to myself. However, I can suggest some popular pre-trained models that you can use for your projects:1. GPT-3: This is the most advanced model available, known for its high level of understanding and ability to generate human-like text.2. BERT: A powerful model for natural language processing tasks, such as sentiment analysis and named entity recognition
+User: oh thank you for you
+Assistent: You're welcome! If you have any other questions or need assistance, feel free to ask.

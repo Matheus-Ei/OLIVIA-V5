@@ -24,8 +24,8 @@ def google(query):
         text = " "
         i=0
         for p in paragraphs:
-            if i > 10:
-                msg.waring("i>10")
+            if i > 5:
+                msg.waring(f"The website has more than {i} paragraphs")
                 msg.informative("Ending the google search funcion")
                 return(text) # Return the text
             

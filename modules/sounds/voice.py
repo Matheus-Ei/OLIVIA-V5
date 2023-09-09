@@ -36,7 +36,6 @@ def fast_speak(texto):
 def speak(data):
     # Voices
     voice = 'en-US-JennyNeural'
-    voice2 = 'pt-BR-FranciscaNeural'
 
     # Data treatment
     data = data.replace('\n'," ")
@@ -73,14 +72,14 @@ def speak(data):
     
 
 # Funcion to Listening the Voice from the User
-def listening():
+def listening(lang="en-us"):
     with sr.Microphone() as source:
         r.adjust_for_ambient_noise(source, duration=1) # Time to ajust the microfone recognition with the sound of the ambient
         while True:
             msg.continuation("Listening")
             try:
                 basicAudio = r.listen(source)
-                textAudio=(r.recognize_google(basicAudio, language="en-us"))
+                textAudio=(r.recognize_google(basicAudio, language=lang))
                 textAudio = textAudio.lower() 
                 msg.user(textAudio)
                 return textAudio

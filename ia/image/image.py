@@ -55,7 +55,6 @@ def generate(inputt):
 	# Response tratament
 	response = requests.post(API_URL, headers=headers, json=image_bytes)
 	res = response.content
-	print(response)
 	
 	# Save the image
 	try:

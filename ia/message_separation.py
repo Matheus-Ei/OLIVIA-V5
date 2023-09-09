@@ -5,11 +5,9 @@ import system.config.operations as op
 
 
 # Define the API URL and the autorization token
-API_URL = op.load("system\config\ia.yaml", "phind_code_llama")
+API_URL = op.load("system\config\ia.yaml", "wizard_coder")
 headers = {"Authorization": "Bearer " + op.load("system\config\ia.yaml", "api_token")}
 
-# Define the tasks
-tasks = "{GENERATE_IMAGE}, {ASKING_SCHEDULE}, {SEARCH_ON_GOOGLE}, {PLAY_MUSIC}, {NEXT_MUSIC}, {PAUSE_MUSIC}, {SELECT_MUSIC}, {SEND_WHATSAPP_MESSAGE}, {NONE}"
 
 # Funcion to delete the trash
 def delete_trash(response, history):
@@ -55,23 +53,16 @@ def delete_trash(response, history):
 # Funcion to predict the response
 def predict(input):
     system = (
-        "\nSistem: when the input enters, the model classifies it into which type of task from the following options:\n"
-        f"Possibles Tasks: {tasks}"
-        "User: hello how are u?"
-        "Assistent: NONE"
-        "User: hey, can you generate a image to me please?"
-        "Assistent: {GENERATE_IMAGE}"
-        "User: livia, talk the weather please"
-        "Assistent: {TALK_WEATHER}"
-        f"User: {input}"
+        "Sistem: the Assistent separates the main message contained within the User\n"
+        "User: send to sister hello can you go with bella to the park\n"
+        "Assistent: hello can you go with bella to the park\n"
+        f"User: {input}\n"
         "Assistent:"
     )
 
-    random_seed = random.randint(0, 50)
     # Dict with the parameters
     generate_kwargs = dict(
-        #max_new_tokens=10,
-        seed=random_seed,
+        max_new_tokens=50,
     )
 
     # Prompt input

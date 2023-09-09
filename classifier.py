@@ -3,6 +3,7 @@ import system.messages as msg
 import executor as ex
 import modules.sounds.voice as voice
 import modules.sounds.audios as audios
+import database.operations as db
 audios.play(r"modules\sounds\audios\init_process.mp3") # Audio to inform that the process is starting
 msg.informative("Modules Imported")
 audios.play(r"modules\sounds\default_voices\the_modules_were_imported.mp3")
@@ -33,7 +34,7 @@ def main():
         msg.informative("Given Fit")
         msg.continuation("Initialization")
         
-        seconds = 180 # Define the seconds to count
+        seconds = 120 # Define the seconds to count
         counted_time_1 = int(time.time()) # Get the seconds since the epoch
         counted_time_2 = 0
         i_time = 0
@@ -66,7 +67,7 @@ def main():
                     msg.informative(task)
 
                     #Funcion to Speak Time
-                    if "TALK_HOUR" in task:
+                    if "ASKING_SCHEDULE" in task:
                         ex.time()
 
                     # Funcion to Search
@@ -75,7 +76,27 @@ def main():
 
                     # Funcion to Generate Image
                     elif "GENERATE_IMAGE" in task:
-                        ex.generate_image(text_audio)
+                        response = ex.generate_image(text_audio)
+
+                    # Funcion to Play Music
+                    elif "PLAY_MUSIC" in task:
+                        response = ex.play_music()
+
+                    # Funcion to Jump the Music
+                    elif "NEXT_MUSIC" in task:
+                        response = ex.next_music()
+
+                    # Funcion to Pause the Music
+                    elif "PAUSE_MUSIC" in task:
+                        response = ex.pause_music()
+
+                    # Funcion to Select the Music
+                    elif "SELECT_MUSIC" in task:
+                        response = ex.select_music(text_audio)
+
+                    # Funcion to Send Whatsapp Message
+                    elif "SEND_WHATSAPP_MESSAGE" in task:
+                        response = ex.send_whatsapp_message(text_audio)
                     
 
                     # Funcion to Talk with the assistent
@@ -83,8 +104,10 @@ def main():
                         response = chat.predict(text_audio) # Predict the response
                         voice.speak(response) # Speak the response
 
-                     # Incert a log
+
+                    # Incert a log
                     msg.waring("Inserting a Log")
+                    db.log_insert(text_audio, response)
 
                 # To waring that Olivia is sleeping
                 else:
@@ -96,8 +119,8 @@ def main():
             # To unknown values
             except sr.UnknownValueError:
                 msg.error("Unknown Value Error")
-
             
+            # To get the time passed
             finally:
                 # Get the seconds since the epoch
                 counted_time_2 = int(time.time())
